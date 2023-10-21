@@ -86,26 +86,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 48),
-          child: BlocBuilder<AppStartCubit, AppStartState>(
-            builder: (context, state) {
-              state as AppStartOnboarding;
-
-              return SmoothPageIndicator(
-                controller: _controller,
-                count: screens.length,
-                effect: WormEffect(
-                  activeDotColor: theme.colorScheme.primary,
-                  dotWidth: 8,
-                  dotHeight: 8,
-                ),
-                onDotClicked: (value) {
-                  _controller.animateToPage(
-                    value,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInCirc,
-                  );
-                  context.read<AppStartCubit>().goToPage(value);
-                },
+          child: SmoothPageIndicator(
+            controller: _controller,
+            count: screens.length,
+            effect: WormEffect(
+              activeDotColor: theme.colorScheme.primary,
+              dotWidth: 8,
+              dotHeight: 8,
+            ),
+            onDotClicked: (value) {
+              _controller.animateToPage(
+                value,
+                duration: const Duration(milliseconds: 750),
+                curve: Curves.easeIn,
               );
             },
           ),
@@ -114,9 +107,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           child: BlocBuilder<AppStartCubit, AppStartState>(
             builder: (context, state) {
-              state as AppStartOnboarding;
-
-              if (state.currentPage == screens.length - 1) {
+              if (state is AppStartOnboarding && state.currentPage == screens.length - 1) {
                 return Row(
                   children: [
                     Expanded(
@@ -145,11 +136,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () async {
-                        context.read<AppStartCubit>().goToPage(screens.length - 1);
-
                         _controller.animateToPage(
                           screens.length,
-                          duration: const Duration(milliseconds: 500),
+                          duration: const Duration(milliseconds: 750),
                           curve: Curves.easeIn,
                         );
                       },
@@ -166,7 +155,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   Expanded(
                     child: FilledButton(
                       onPressed: () {
-                        context.read<AppStartCubit>().goToPage(state.currentPage + 1);
                         _controller.nextPage(
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.easeIn,
