@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart';
 import 'package:keracars_app/features/app_start/presentation/widget/widget.dart';
-import 'package:keracars_app/features/auth/presentation/pages/auth_page.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class OnboardingPage extends StatefulWidget {
+class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
 
-  static MaterialPageRoute route() => MaterialPageRoute(
-        builder: (_) {
-          return BlocProvider<AppStartCubit>.value(
-            value: AppStartCubit(),
-            child: const OnboardingPage(),
-          );
-        },
-      );
-
   @override
-  State<OnboardingPage> createState() => _OnboardingPageState();
+  Widget build(BuildContext context) {
+    return BlocProvider<AppStartCubit>.value(
+      value: AppStartCubit(),
+      child: const _OnboardingPage(),
+    );
+  }
 }
 
-class _OnboardingPageState extends State<OnboardingPage> {
+class _OnboardingPage extends StatefulWidget {
+  const _OnboardingPage();
+
+  @override
+  State<_OnboardingPage> createState() => _OnboardingPageState();
+}
+
+class _OnboardingPageState extends State<_OnboardingPage> {
   final PageController _controller = PageController();
 
   @override
@@ -115,7 +118,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         onPressed: () {
                           context.read<AppStartCubit>().finishOnboarding();
 
-                          Navigator.of(context).pushReplacement(AuthPage.route());
+                          context.go('/auth');
                         },
                         child: const Padding(
                           padding: EdgeInsets.symmetric(vertical: 16),

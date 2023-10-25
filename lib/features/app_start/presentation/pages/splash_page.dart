@@ -3,9 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart';
-import 'package:keracars_app/features/app_start/presentation/pages/onboarding_page.dart';
-import 'package:keracars_app/features/auth/presentation/pages/auth_page.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -16,11 +15,11 @@ class SplashPage extends StatelessWidget {
       AppStartState state = context.read<AppStartCubit>().state;
 
       if (state is AppStartOnboardingFinished) {
-        Navigator.of(context).pushReplacement(AuthPage.route());
+        context.go('/root');
         return;
       }
 
-      Navigator.of(context).pushReplacement(OnboardingPage.route());
+      context.go('/onboarding');
     });
 
     return Scaffold(body: _buildBody(context));

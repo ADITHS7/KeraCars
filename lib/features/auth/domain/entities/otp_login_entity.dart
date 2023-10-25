@@ -1,9 +1,9 @@
 class OTPLoginEntity {
-  final String otpId;
+  final String id;
   final String otp;
 
   const OTPLoginEntity({
-    required this.otpId,
+    required this.id,
     required this.otp,
   });
 }

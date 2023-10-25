@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:keracars_app/core/network/service/token_service.dart';
+import 'package:get_it/get_it.dart';
+import 'package:keracars_app/core/security/token_service.dart';
+import 'package:keracars_app/features/auth/presentation/blocs/blocs.dart';
 
 class TokenInterceptor extends Interceptor {
   final Dio _dio;
@@ -26,6 +28,7 @@ class TokenInterceptor extends Interceptor {
           return handler.resolve(await _dio.fetch(err.requestOptions));
         }
       } catch (_) {
+        GetIt.I<AuthBloc>().add(RemoveAuthentication());
         return handler.next(err);
       }
     }

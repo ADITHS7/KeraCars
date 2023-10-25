@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:keracars_app/config/routes/app_route.dart';
 import 'package:keracars_app/config/theme/app_theme.dart';
-import 'package:keracars_app/features/app_start/presentation/pages/app_start_page.dart';
 
 void startApp() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const App());
+  runApp(App());
 }
 
 class App extends StatelessWidget {
-  const App({super.key});
+  App({super.key});
+
+  final routerConfig = AppRoute().goRouter;
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'KeraCars App',
       theme: myTheme,
-      home: const AppStartPage(),
+      routerConfig: routerConfig,
     );
   }
 }

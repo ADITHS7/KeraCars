@@ -1,6 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:keracars_app/core/error/network_exception.dart';
 import 'package:keracars_app/core/network/resources/data_state.dart';
-import 'package:keracars_app/core/network/service/services.dart';
+import 'package:keracars_app/core/security/token_service.dart';
 import 'package:keracars_app/core/usecases/usecase.dart';
 
 class CheckAuthenticationUseCase extends UseCase<DataState<bool>, void> {
@@ -15,17 +16,16 @@ class CheckAuthenticationUseCase extends UseCase<DataState<bool>, void> {
     try {
       await _tokenService.getNewAccessToken();
       return const DataSuccess(true);
-    } on Exception catch (e) {
+    } on DioException catch (e) {
       switch (e.runtimeType) {
         case BadRequestException:
+        case UnauthorizedException:
           return DataFailed(e);
         default:
           final rToken = await _tokenService.getRefreshToken();
           if (rToken != null) return const DataSuccess(false);
           return DataFailed(e);
       }
-    } catch (e) {
-      return DataFailed(Exception('unknown error'));
     }
   }
 }

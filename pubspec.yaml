@@ -57,6 +57,7 @@ dependencies:
   cached_network_image: ^3.3.0
 
   # presentation
+  go_router: ^12.0.0
   intl: ^0.18.1
   flutter_hooks: ^0.20.3
   flutter_svg: ^2.0.7
