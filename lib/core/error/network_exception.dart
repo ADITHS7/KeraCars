@@ -1,45 +1,45 @@
-sealed class NetworkException implements Exception {
-  const NetworkException({this.message}) : super();
+import 'package:dio/dio.dart';
 
-  final String? message;
+sealed class NetworkException extends DioException implements Exception {
+  NetworkException({required super.requestOptions, super.response});
 }
 
 /// 400
 class BadRequestException extends NetworkException {
-  BadRequestException({super.message});
+  BadRequestException({required super.requestOptions, super.response});
 }
 
 /// 401
 class UnauthorizedException extends NetworkException {
-  UnauthorizedException({super.message});
+  UnauthorizedException({required super.requestOptions, super.response});
 }
 
 /// 403
 class ForbiddenException extends NetworkException {
-  ForbiddenException({super.message});
+  ForbiddenException({required super.requestOptions, super.response});
 }
 
 /// 404
 class NotFoundException extends NetworkException {
-  NotFoundException({super.message});
+  NotFoundException({required super.requestOptions, super.response});
 }
 
 /// 409
 class ConflictException extends NetworkException {
-  ConflictException({super.message});
+  ConflictException({required super.requestOptions, super.response});
 }
 
 /// 500
 class InternalServerErrorException extends NetworkException {
-  InternalServerErrorException({super.message});
+  InternalServerErrorException({required super.requestOptions, super.response});
 }
 
 /// no internet
 class NoInternetConnectionException extends NetworkException {
-  NoInternetConnectionException({super.message});
+  NoInternetConnectionException({required super.requestOptions, super.response});
 }
 
 /// slow internet / timeout
 class DeadlineExceededException extends NetworkException {
-  DeadlineExceededException({super.message});
+  DeadlineExceededException({required super.requestOptions, super.response});
 }
