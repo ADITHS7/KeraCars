@@ -7,35 +7,34 @@ sealed class LoginState extends Equatable {
   List<Object> get props => [];
 }
 
-final class LoginInitial extends LoginState {}
+final class LoginInitial extends LoginState {
+  final RequestOTPEntity? requestOTP;
+  final Exception? exception;
 
-final class OTPRequestError extends LoginState {
-  final Exception exception;
-
-  const OTPRequestError(this.exception);
+  const LoginInitial({this.exception, this.requestOTP});
 
   @override
-  List<Object> get props => [exception];
+  List<Object> get props => [exception ?? Exception(), requestOTP ?? {}];
 }
+
+final class OTPRequestLoading extends LoginState {}
 
 final class OTPRequestSuccess extends LoginState {
   final String otpId;
+  final RequestOTPEntity requestOTP;
+  final Exception? exception;
 
-  const OTPRequestSuccess({required this.otpId});
-
-  @override
-  List<Object> get props => [otpId];
-}
-
-final class SignInRequestError extends LoginState {
-  final String otpId;
-  final Exception exception;
-
-  const SignInRequestError(this.exception, {required this.otpId});
+  const OTPRequestSuccess({
+    this.exception,
+    required this.otpId,
+    required this.requestOTP,
+  });
 
   @override
-  List<Object> get props => [exception, otpId];
+  List<Object> get props => [exception ?? Exception(), otpId, requestOTP];
 }
+
+final class SignInRequestLoading extends LoginState {}
 
 final class SignInRequestSuccess extends LoginState {
   final NewAuthEntity newAuth;

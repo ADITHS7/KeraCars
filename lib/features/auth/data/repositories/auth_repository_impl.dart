@@ -13,9 +13,12 @@ class AuthRepositoryImpl implements AuthRepository {
   }) : _authService = authService;
 
   @override
-  Future<DataState<String>> requestOTP({required String credential}) async {
+  Future<DataState<String>> requestOTP(RequestOTPEntity requestOTP) async {
     try {
-      final httpResponse = await _authService.getOTP(credential);
+      final httpResponse = await _authService.getOTP(RequestOTPModel(
+        credential: requestOTP.credential,
+        receiveUpdate: requestOTP.receiveUpdate,
+      ));
       return DataSuccess(httpResponse.data['otpId']!);
     } on DioException catch (e) {
       return DataFailed(e);

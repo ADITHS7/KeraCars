@@ -22,7 +22,7 @@ class AppRoute {
       debugLogDiagnostics: true,
       initialLocation: '/start',
       routes: [
-        GoRoute(path: '/', redirect: (context, state) => '/auth'),
+        GoRoute(path: '/', redirect: (context, state) => '/root'),
         GoRoute(
           name: 'start',
           path: '/start',

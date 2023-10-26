@@ -9,8 +9,8 @@ abstract class AuthService {
   factory AuthService(Dio dio, {String? baseUrl}) = _AuthService;
 
   @GET('authentications/otp')
-  Future<HttpResponse<Map<String, String>>> getOTP(@Query('credential') String credential);
+  Future<HttpResponse<Map<String, String>>> getOTP(@Queries() RequestOTPModel requestOTP);
 
   @POST('authentications/otp')
-  Future<HttpResponse<NewAuthModel>> postOTP(@Body() OTPLoginModel otpLoginModel);
+  Future<HttpResponse<NewAuthModel>> postOTP(@Body() OTPLoginModel otpLogin);
 }
