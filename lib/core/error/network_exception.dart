@@ -2,6 +2,9 @@ import 'package:dio/dio.dart';
 
 sealed class NetworkException extends DioException implements Exception {
   NetworkException({required super.requestOptions, super.response});
+
+  @override
+  String? get message => response?.data['message'];
 }
 
 /// 400
