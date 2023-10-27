@@ -39,13 +39,13 @@ class CustomTextFormField extends StatelessWidget {
     ThemeData theme = Theme.of(context);
 
     final BorderSide borderSide = BorderSide(
-      width: 3,
+      width: 2,
       strokeAlign: BorderSide.strokeAlignCenter,
       color: theme.colorScheme.primary,
     );
 
     final OutlineInputBorder inputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(100),
       borderSide: borderSide,
     );
 
@@ -59,12 +59,14 @@ class CustomTextFormField extends StatelessWidget {
       onTap: onTap,
       readOnly: readOnly,
       decoration: InputDecoration(
+        filled: true,
         border: inputBorder,
         enabledBorder: inputBorder,
         disabledBorder: inputBorder.copyWith(borderSide: borderSide.copyWith(color: theme.disabledColor)),
         errorBorder: inputBorder.copyWith(borderSide: borderSide.copyWith(color: theme.colorScheme.error)),
         focusedBorder: inputBorder.copyWith(borderSide: borderSide.copyWith(color: theme.colorScheme.primary)),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+        fillColor: theme.colorScheme.primary.withAlpha(40),
         isDense: true,
         focusedErrorBorder: inputBorder,
         prefixText: prefixText,
