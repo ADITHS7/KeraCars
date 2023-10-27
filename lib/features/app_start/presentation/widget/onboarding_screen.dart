@@ -36,6 +36,7 @@ class OnboardingScreen extends StatelessWidget {
           style: theme.textTheme.titleMedium,
           textAlign: TextAlign.center,
         ),
+        const SizedBox(height: 24),
       ],
     );
   }

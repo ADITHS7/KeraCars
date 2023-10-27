@@ -59,7 +59,23 @@ class _OnboardingPageState extends State<_OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            _controller.previousPage(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeIn,
+            );
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: theme.colorScheme.primary,
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -85,7 +101,7 @@ class _OnboardingPageState extends State<_OnboardingPage> {
 
     return Column(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 48),
@@ -111,68 +127,52 @@ class _OnboardingPageState extends State<_OnboardingPage> {
           child: BlocBuilder<AppStartCubit, AppStartState>(
             builder: (context, state) {
               if (state is AppStartOnboarding && state.currentPage == screens.length - 1) {
-                return Row(
-                  children: [
-                    Expanded(
-                      child: FilledButton(
-                        onPressed: () {
-                          context.read<AppStartCubit>().finishOnboarding();
+                return FilledButton(
+                  onPressed: () {
+                    context.read<AppStartCubit>().finishOnboarding();
 
-                          context.go('/auth');
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 16),
-                          child: Text(
-                            "Get Started",
-                            style: TextStyle(fontSize: 22),
-                          ),
+                    context.go('/root');
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 36),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(width: 8),
+                        Text(
+                          "Get Started",
+                          style: TextStyle(fontSize: 22),
                         ),
-                      ),
+                        SizedBox(width: 8),
+                        Icon(Icons.arrow_forward_ios),
+                      ],
                     ),
-                  ],
+                  ),
                 );
               }
 
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () async {
-                        _controller.animateToPage(
-                          screens.length,
-                          duration: const Duration(milliseconds: 750),
-                          curve: Curves.easeIn,
-                        );
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        child: Text(
-                          "Skip",
-                          style: TextStyle(fontSize: 22),
-                        ),
+              return FilledButton(
+                onPressed: () {
+                  _controller.nextPage(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeIn,
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 48),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(width: 8),
+                      Text(
+                        "Next",
+                        style: TextStyle(fontSize: 22),
                       ),
-                    ),
+                      SizedBox(width: 8),
+                      Icon(Icons.arrow_forward_ios),
+                    ],
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: FilledButton(
-                      onPressed: () {
-                        _controller.nextPage(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeIn,
-                        );
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        child: Text(
-                          "Next",
-                          style: TextStyle(fontSize: 22),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               );
             },
           ),
