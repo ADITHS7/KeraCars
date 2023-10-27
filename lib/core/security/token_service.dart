@@ -8,8 +8,8 @@ class TokenService {
   String? _accessToken;
   String? _refreshToken;
 
-  final String _accessTokenKey = 'keracars_accessToken';
-  final String _refreshTokenKey = 'keracars_refreshToken';
+  static const String _accessTokenKey = 'keracars_accessToken';
+  static const String _refreshTokenKey = 'keracars_refreshToken';
 
   TokenService({
     required Dio dio,
