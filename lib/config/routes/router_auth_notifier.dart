@@ -15,9 +15,11 @@ class RouterAuthNotifier extends ChangeNotifier {
   String? redirect(BuildContext context, GoRouterState state) {
     if (_authBloc.state is AuthInitial) return null;
 
+    final loginPaths = ['/root/login', '/root/login/otp', '/root/login/register'];
+
     // if the user is not logged in, they need to login
     final isAuthenticated = _authBloc.state is AuthAuthenticated;
-    final loggingIn = state.fullPath == '/root/login' || state.fullPath == '/root/login/otp';
+    final loggingIn = loginPaths.contains(state.fullPath);
 
     // bundle the location the user is coming from into a query parameter
     final from = state.matchedLocation == '/root/home' ? '' : '?from=${state.fullPath}';

@@ -21,12 +21,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginOTPUseCase _loginOTPUseCase;
 
   void _onEditNumber(EditNumber event, Emitter<LoginState> emit) {
-    final requestOtp = RequestOTPEntity(
-      receiveUpdate: event.receiveInstantUpdate,
-      credential: event.credential,
-    );
-
-    return emit(LoginInitial(requestOTP: requestOtp));
+    return emit(LoginInitial(requestOTP: event.requestOTP));
   }
 
   void _onCheckBoxChanged(CheckBoxChanged event, Emitter<LoginState> emit) {

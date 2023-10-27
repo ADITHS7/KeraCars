@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:keracars_app/core/error/network_exception.dart';
 import 'package:keracars_app/core/widgets/widgets.dart';
 import 'package:keracars_app/features/auth/presentation/blocs/blocs.dart';
+import 'package:keracars_app/features/auth/presentation/widgets/widgets.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -31,6 +33,8 @@ class _LoginScreen extends StatelessWidget {
             context.namedLocation('otp'),
             extra: context.read<LoginBloc>(),
           );
+        } else if (state is LoginInitial && state.exception != null) {
+          ErrorAlertDialog.show(context, contentText: (state.exception as NetworkException).message ?? "Error");
         }
       },
       child: Scaffold(
@@ -41,8 +45,12 @@ class _LoginScreen extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    final TextEditingController controller =
-        TextEditingController.fromValue(TextEditingValue(text: (context.read<LoginBloc>().state as LoginInitial).requestOTP?.credential ?? ''));
+    final state = context.read<LoginBloc>().state;
+
+    final TextEditingController controller = TextEditingController.fromValue(
+      TextEditingValue(text: state is LoginInitial ? state.requestOTP?.credential ?? '' : ''),
+    );
+
     ThemeData theme = Theme.of(context);
 
     return SingleChildScrollView(
@@ -80,7 +88,10 @@ class _LoginScreen extends StatelessWidget {
                       const TextSpan(text: "Don't have an account? "),
                       WidgetSpan(
                         child: InkWell(
-                          onTap: () => context.go(context.namedLocation('signup')),
+                          onTap: () => context.go(
+                            context.namedLocation('register'),
+                            extra: context.read<LoginBloc>(),
+                          ),
                           child: Text(
                             "Sign Up",
                             style: theme.textTheme.bodyMedium?.copyWith(
@@ -95,7 +106,8 @@ class _LoginScreen extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height / 4),
+                SizedBox(height: MediaQuery.of(context).size.height * .22),
+                const Divider(),
                 Text.rich(
                   TextSpan(
                     children: [
@@ -156,7 +168,15 @@ class _LoginScreen extends StatelessWidget {
           return const SizedBox();
         },
       ),
-      contentPadding: const EdgeInsets.symmetric(),
+      onTap: () {
+        context.read<LoginBloc>().add(
+              CheckBoxChanged(
+                !((context.read<LoginBloc>().state as LoginInitial).requestOTP?.receiveUpdate ?? false),
+              ),
+            );
+      },
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+      tileColor: theme.colorScheme.primary.withAlpha(40),
     );
   }
 }
@@ -177,12 +197,12 @@ class _GetOTPButton extends StatelessWidget {
         return FilledButton(
           onPressed: state is! OTPRequestLoading
               ? () => context.read<LoginBloc>().add(RequestOTP(
-                    '+91${controller.text}',
+                    controller.text.isEmpty ? '' : '+91${controller.text}',
                     (state as LoginInitial).requestOTP?.receiveUpdate ?? false,
                   ))
               : null,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 36),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 36),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

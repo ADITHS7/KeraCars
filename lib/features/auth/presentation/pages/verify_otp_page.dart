@@ -26,29 +26,33 @@ class _VerifyOTPPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return BlocListener<LoginBloc, LoginState>(
       listener: (_, state) {
         if (state is SignInRequestSuccess) {
           GetIt.I<AuthBloc>().add(AddAuthentication(state.newAuth));
         } else if (state is OTPRequestSuccess && state.exception != null) {
-          showDialog(
-            context: context,
-            builder: (context) => Dialog(
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(40),
-                  child: Text(
-                    (state.exception as NetworkException).message ?? "Error",
-                    style: const TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                ),
-              ),
-            ),
+          ErrorAlertDialog.show(
+            context,
+            contentText: (state.exception as NetworkException).message ?? "Error",
           );
         }
       },
       child: Scaffold(
-        appBar: AppBar(automaticallyImplyLeading: false),
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              final state = context.read<LoginBloc>().state as OTPRequestSuccess;
+              context.read<LoginBloc>().add(EditNumber(state.requestOTP));
+              context.pop();
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: theme.colorScheme.primary,
+            ),
+          ),
+        ),
         body: _buildBody(context),
       ),
     );
@@ -87,7 +91,7 @@ class _VerifyOTPPage extends StatelessWidget {
             InkWell(
               onTap: () {
                 final state = context.read<LoginBloc>().state as OTPRequestSuccess;
-                context.read<LoginBloc>().add(CheckBoxChanged(state.requestOTP.receiveUpdate));
+                context.read<LoginBloc>().add(EditNumber(state.requestOTP));
                 context.go(context.namedLocation('login'));
               },
               child: Text(

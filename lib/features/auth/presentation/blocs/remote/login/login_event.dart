@@ -8,16 +8,12 @@ sealed class LoginEvent extends Equatable {
 }
 
 class EditNumber extends LoginEvent {
-  final String credential;
-  final bool receiveInstantUpdate;
+  final RequestOTPEntity requestOTP;
 
-  const EditNumber(
-    this.credential,
-    this.receiveInstantUpdate,
-  );
+  const EditNumber(this.requestOTP);
 
   @override
-  List<Object> get props => [credential, receiveInstantUpdate];
+  List<Object> get props => [requestOTP];
 }
 
 class CheckBoxChanged extends LoginEvent {
