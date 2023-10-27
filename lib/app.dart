@@ -17,7 +17,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'KeraCars App',
-      theme: myTheme,
+      theme: AppTheme.myTheme(),
       routerConfig: routerConfig,
     );
   }

@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
 
-ThemeData myTheme = ThemeData(
-  colorScheme: ColorScheme.fromSeed(
-    seedColor: const Color(0xFF003366),
-    primary: const Color(0xFF003366),
-    secondary: const Color(0xFF06FFE1),
-    // background: Colors.white,
-  ),
-  useMaterial3: true,
-  fontFamily: 'Poppins',
-);
+class AppTheme {
+  static ThemeData myTheme() => ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF528AFF),
+          primary: const Color(0xFF528AFF),
+          secondary: const Color(0xFFB6D25E),
+        ),
+        useMaterial3: true,
+        fontFamily: 'Poppins',
+        filledButtonTheme: FilledButtonThemeData(
+          style: ButtonStyle(
+            shape: MaterialStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: ButtonStyle(
+            shape: MaterialStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+          ),
+        ),
+        buttonTheme: ButtonThemeData(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+      );
+}
