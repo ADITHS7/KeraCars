@@ -107,7 +107,16 @@ class _VerifyOTPPage extends StatelessWidget {
               },
             ),
             const SizedBox(height: 36),
-            _verifyButton(context, controller),
+            Center(
+              child: BlocBuilder<LoginBloc, LoginState>(
+                builder: (context, state) {
+                  return CTAButton(
+                    text: state is SignInRequestLoading ? "Processing..." : "Verify",
+                    onPressed: state is! SignInRequestLoading ? () => _submitOtp(context, otp: controller.text) : null,
+                  );
+                },
+              ),
+            ),
             const SizedBox(height: 36),
             Center(
               child: OTPTimeout(
@@ -117,36 +126,6 @@ class _VerifyOTPPage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _verifyButton(
-    BuildContext context,
-    TextEditingController controller,
-  ) {
-    ThemeData theme = Theme.of(context);
-    return Row(
-      children: [
-        Expanded(
-          child: BlocBuilder<LoginBloc, LoginState>(
-            builder: (context, state) {
-              return FilledButton(
-                onPressed: state is! SignInRequestLoading ? () => _submitOtp(context, otp: controller.text) : null,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Text(
-                    state is SignInRequestLoading ? "Processing..." : "Verify",
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      color: theme.colorScheme.onPrimary,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
     );
   }
 

@@ -19,18 +19,16 @@ class CustomTextFormField extends StatelessWidget {
     this.readOnly = false,
     this.obscureText = false,
     this.autofocus = false,
+    this.counterText,
   }) : _controller = controller;
 
   final TextEditingController? _controller;
   final void Function(String?)? onChanged;
   final String? Function(String?)? validator;
   final VoidCallback? onTap;
-  final String? helperText, prefixText, hintText, errorText;
+  final String? helperText, prefixText, hintText, errorText, counterText;
   final int? maxLines, minLines;
-  final bool isNumberInput;
-  final bool readOnly;
-  final bool obscureText;
-  final bool autofocus;
+  final bool isNumberInput, readOnly, obscureText, autofocus;
 
   final Widget? prefixIcon;
 
@@ -74,7 +72,7 @@ class CustomTextFormField extends StatelessWidget {
         helperText: helperText,
         hintText: hintText,
         errorText: errorText,
-        counterText: ' ',
+        counterText: counterText ?? ' ',
       ),
       keyboardType: isNumberInput ? const TextInputType.numberWithOptions(decimal: false) : null,
       inputFormatters: isNumberInput ? [FilteringTextInputFormatter.digitsOnly] : null,

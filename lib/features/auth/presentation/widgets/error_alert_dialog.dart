@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ErrorAlertDialog extends StatelessWidget {
-  const ErrorAlertDialog({super.key, required this.contentText});
+  const ErrorAlertDialog({super.key, this.contentText});
 
-  final String contentText;
+  final String? contentText;
 
-  static FutureOr<dynamic> show(BuildContext context, {required String contentText}) {
-    return showDialog(
+  static FutureOr<T?> show<T>(BuildContext context, {String? contentText}) {
+    return showDialog<T>(
       context: context,
       builder: (context) => ErrorAlertDialog(
         contentText: contentText,
@@ -22,7 +22,7 @@ class ErrorAlertDialog extends StatelessWidget {
     return AlertDialog(
       title: const Text("Error"),
       content: Text(
-        contentText,
+        contentText ?? 'Error',
         style: const TextStyle(fontWeight: FontWeight.w600),
       ),
       actions: [

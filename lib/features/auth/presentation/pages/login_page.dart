@@ -77,7 +77,25 @@ class _LoginScreen extends StatelessWidget {
             ),
             _checkboxTile(context),
             const SizedBox(height: 36),
-            Center(child: _GetOTPButton(controller: controller, theme: theme)),
+            Center(
+              child: BlocBuilder<LoginBloc, LoginState>(
+                builder: (context, state) {
+                  return CTAButton(
+                    text: state is OTPRequestLoading ? "Processing..." : "Get OTP",
+                    onPressed: state is! OTPRequestLoading
+                        ? () {
+                            context.read<LoginBloc>().add(
+                                  RequestOTP(
+                                    controller.text.isEmpty ? '' : '+91${controller.text}',
+                                    (state as LoginInitial).requestOTP?.receiveUpdate ?? false,
+                                  ),
+                                );
+                          }
+                        : null,
+                  );
+                },
+              ),
+            ),
             const SizedBox(height: 36),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -177,49 +195,6 @@ class _LoginScreen extends StatelessWidget {
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
       tileColor: theme.colorScheme.primary.withAlpha(40),
-    );
-  }
-}
-
-class _GetOTPButton extends StatelessWidget {
-  const _GetOTPButton({
-    required this.controller,
-    required this.theme,
-  });
-
-  final TextEditingController controller;
-  final ThemeData theme;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
-      builder: (context, state) {
-        return FilledButton(
-          onPressed: state is! OTPRequestLoading
-              ? () => context.read<LoginBloc>().add(RequestOTP(
-                    controller.text.isEmpty ? '' : '+91${controller.text}',
-                    (state as LoginInitial).requestOTP?.receiveUpdate ?? false,
-                  ))
-              : null,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 36),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  state is OTPRequestLoading ? "Processing..." : "Get OTP",
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    color: theme.colorScheme.onPrimary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                const Icon(Icons.arrow_forward_ios),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }
