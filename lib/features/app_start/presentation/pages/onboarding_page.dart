@@ -87,8 +87,11 @@ class _OnboardingPageState extends State<_OnboardingPage> {
               onPageChanged: (value) => context.read<AppStartCubit>().goToPage(value),
             ),
           ),
-          Expanded(
-            flex: 2,
+          Padding(
+            padding: EdgeInsets.only(
+              top: 16,
+              bottom: MediaQuery.of(context).size.height * .1,
+            ),
             child: _onboardingAction(context),
           ),
         ],
@@ -122,50 +125,23 @@ class _OnboardingPageState extends State<_OnboardingPage> {
             },
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-          child: BlocBuilder<AppStartCubit, AppStartState>(
-            builder: (context, state) {
-              if (state is AppStartOnboarding && state.currentPage == screens.length - 1) {
-                return FilledButton(
-                  onPressed: () {
-                    context.read<AppStartCubit>().finishOnboarding();
-
-                    context.go('/root');
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 36),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(width: 8),
-                        Text(
-                          "Get Started",
-                          style: TextStyle(fontSize: 22),
-                        ),
-                        SizedBox(width: 8),
-                        Icon(Icons.arrow_forward_ios),
-                      ],
-                    ),
-                  ),
-                );
-              }
-
+        BlocBuilder<AppStartCubit, AppStartState>(
+          builder: (context, state) {
+            if (state is AppStartOnboarding && state.currentPage == screens.length - 1) {
               return FilledButton(
                 onPressed: () {
-                  _controller.nextPage(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeIn,
-                  );
+                  context.read<AppStartCubit>().finishOnboarding();
+
+                  context.go('/root');
                 },
                 child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 48),
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 36),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(width: 8),
                       Text(
-                        "Next",
+                        "Get Started",
                         style: TextStyle(fontSize: 22),
                       ),
                       SizedBox(width: 8),
@@ -174,8 +150,32 @@ class _OnboardingPageState extends State<_OnboardingPage> {
                   ),
                 ),
               );
-            },
-          ),
+            }
+
+            return FilledButton(
+              onPressed: () {
+                _controller.nextPage(
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeIn,
+                );
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 48),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(width: 8),
+                    Text(
+                      "Next",
+                      style: TextStyle(fontSize: 22),
+                    ),
+                    SizedBox(width: 8),
+                    Icon(Icons.arrow_forward_ios),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ],
     );
