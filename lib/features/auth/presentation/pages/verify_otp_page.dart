@@ -8,14 +8,27 @@ import 'package:keracars_app/features/auth/presentation/blocs/blocs.dart';
 import 'package:keracars_app/features/auth/presentation/widgets/widgets.dart';
 
 class VerifyOTPPage extends StatelessWidget {
-  const VerifyOTPPage({super.key, required LoginBloc bloc}) : _bloc = bloc;
+  const VerifyOTPPage({
+    super.key,
+    required String otpId,
+    required LoginBloc loginBloc,
+  })  : _otpId = otpId,
+        _loginBloc = loginBloc;
 
-  final LoginBloc _bloc;
+  final String _otpId;
+  final LoginBloc _loginBloc;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _bloc,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(
+          value: GetIt.I<VerifyOtpBloc>()..add(VerifyOtpInit(otpId: _otpId)),
+        ),
+        BlocProvider.value(
+          value: _loginBloc,
+        ),
+      ],
       child: const _VerifyOTPPage(),
     );
   }
@@ -28,11 +41,11 @@ class _VerifyOTPPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
-    return BlocListener<LoginBloc, LoginState>(
+    return BlocListener<VerifyOtpBloc, VerifyOtpState>(
       listener: (_, state) {
         if (state is SignInRequestSuccess) {
           GetIt.I<AuthBloc>().add(AddAuthentication(state.newAuth));
-        } else if (state is OTPRequestSuccess && state.exception != null) {
+        } else if (state is SignInRequestError && state.exception != null) {
           ErrorAlertDialog.show(
             context,
             contentText: (state.exception as NetworkException).message ?? "Error",
@@ -42,11 +55,7 @@ class _VerifyOTPPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            onPressed: () {
-              final state = context.read<LoginBloc>().state as OTPRequestSuccess;
-              context.read<LoginBloc>().add(EditNumber(state.requestOTP));
-              context.pop();
-            },
+            onPressed: () => context.pop(),
             icon: Icon(
               Icons.arrow_back_ios,
               color: theme.colorScheme.primary,
@@ -59,16 +68,14 @@ class _VerifyOTPPage extends StatelessWidget {
   }
 
   void _submitOtp(BuildContext context, {required String otp}) {
-    final state = context.read<LoginBloc>().state;
+    final state = context.read<VerifyOtpBloc>().state;
 
-    if (state is OTPRequestSuccess) {
-      final otpLogin = OTPLoginModel(
-        id: state.otpId,
-        otp: otp,
-      );
+    final otpLogin = OTPLoginModel(
+      id: state.otpId,
+      otp: otp,
+    );
 
-      context.read<LoginBloc>().add(RequestSignIn(otpLogin));
-    }
+    context.read<VerifyOtpBloc>().add(RequestSignIn(otpLogin));
   }
 
   Widget _buildBody(BuildContext context) {
@@ -89,11 +96,7 @@ class _VerifyOTPPage extends StatelessWidget {
             _subheader(context),
             const SizedBox(height: 16),
             InkWell(
-              onTap: () {
-                final state = context.read<LoginBloc>().state as OTPRequestSuccess;
-                context.read<LoginBloc>().add(EditNumber(state.requestOTP));
-                context.go(context.namedLocation('login'));
-              },
+              onTap: () => context.go(context.namedLocation('login')),
               child: Text(
                 "Edit number",
                 style: TextStyle(color: theme.colorScheme.primary),
@@ -108,7 +111,7 @@ class _VerifyOTPPage extends StatelessWidget {
             ),
             const SizedBox(height: 36),
             Center(
-              child: BlocBuilder<LoginBloc, LoginState>(
+              child: BlocBuilder<VerifyOtpBloc, VerifyOtpState>(
                 builder: (context, state) {
                   return CTAButton(
                     text: state is SignInRequestLoading ? "Processing..." : "Verify",
@@ -118,10 +121,8 @@ class _VerifyOTPPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 36),
-            Center(
-              child: OTPTimeout(
-                requestOTP: (context.read<LoginBloc>().state as OTPRequestSuccess).requestOTP,
-              ),
+            const Center(
+              child: OTPTimer(),
             ),
           ],
         ),
@@ -132,7 +133,7 @@ class _VerifyOTPPage extends StatelessWidget {
   Widget _subheader(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
-    final phoneNumber = (context.read<LoginBloc>().state as OTPRequestSuccess).requestOTP.credential;
+    final phone = (context.read<LoginBloc>().state as OTPRequestSuccess).requestOTP.credential;
 
     return Text.rich(
       TextSpan(
@@ -143,7 +144,7 @@ class _VerifyOTPPage extends StatelessWidget {
             style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.primary),
           ),
           const TextSpan(text: "to your mobile number. +91"),
-          TextSpan(text: "*****${phoneNumber.substring(phoneNumber.length - 3)}"),
+          TextSpan(text: "*****${phone.substring(phone.length - 3)}"),
         ],
         style: theme.textTheme.titleMedium?.copyWith(color: theme.disabledColor),
       ),

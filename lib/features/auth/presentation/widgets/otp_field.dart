@@ -32,7 +32,7 @@ class OTPField extends StatelessWidget {
         hasCustomInputDecoration: true,
         onSubmit: onSubmit,
         numberOfFields: 4,
-        showCursor: false,
+        cursorColor: theme.colorScheme.primary,
         autoFocus: true,
         fieldWidth: 75,
         textStyle: const TextStyle(

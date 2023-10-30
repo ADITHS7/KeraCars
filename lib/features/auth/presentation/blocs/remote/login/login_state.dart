@@ -1,46 +1,43 @@
 part of 'login_bloc.dart';
 
 sealed class LoginState extends Equatable {
-  const LoginState();
+  final RequestOTPEntity requestOTP;
+
+  const LoginState({
+    RequestOTPEntity? requestOTPEntity,
+  }) : requestOTP = requestOTPEntity ?? const RequestOTPEntity(credential: '', receiveUpdate: false);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [requestOTP];
 }
 
 final class LoginInitial extends LoginState {
-  final RequestOTPEntity? requestOTP;
-  final Exception? exception;
-
-  const LoginInitial({this.exception, this.requestOTP});
-
-  @override
-  List<Object> get props => [exception ?? Exception(), requestOTP ?? {}];
+  const LoginInitial({super.requestOTPEntity});
 }
 
-final class OTPRequestLoading extends LoginState {}
+final class OTPRequestLoading extends LoginState {
+  const OTPRequestLoading({super.requestOTPEntity});
+}
+
+final class OTPRequestError extends LoginState {
+  final Exception? exception;
+
+  const OTPRequestError({super.requestOTPEntity, this.exception});
+
+  @override
+  List<Object> get props => [exception ?? Exception()];
+}
 
 final class OTPRequestSuccess extends LoginState {
   final String otpId;
-  final RequestOTPEntity requestOTP;
-  final Exception? exception;
+  final bool resending;
 
   const OTPRequestSuccess({
-    this.exception,
     required this.otpId,
-    required this.requestOTP,
+    required super.requestOTPEntity,
+    required this.resending,
   });
 
   @override
-  List<Object> get props => [exception ?? Exception(), otpId, requestOTP];
-}
-
-final class SignInRequestLoading extends LoginState {}
-
-final class SignInRequestSuccess extends LoginState {
-  final NewAuthEntity newAuth;
-
-  const SignInRequestSuccess(this.newAuth);
-
-  @override
-  List<Object> get props => [newAuth];
+  List<Object> get props => [otpId, resending];
 }

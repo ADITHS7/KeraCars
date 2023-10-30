@@ -28,12 +28,12 @@ class _LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (_, state) {
-        if (state is OTPRequestSuccess) {
+        if (state is OTPRequestSuccess && !state.resending) {
           context.go(
-            context.namedLocation('otp'),
+            context.namedLocation('otp', queryParameters: {'otpId': state.otpId}),
             extra: context.read<LoginBloc>(),
           );
-        } else if (state is LoginInitial && state.exception != null) {
+        } else if (state is OTPRequestError && state.exception != null) {
           ErrorAlertDialog.show(context, contentText: (state.exception as NetworkException).message ?? "Error");
         }
       },
@@ -48,7 +48,7 @@ class _LoginScreen extends StatelessWidget {
     final state = context.read<LoginBloc>().state;
 
     final TextEditingController controller = TextEditingController.fromValue(
-      TextEditingValue(text: state is LoginInitial ? state.requestOTP?.credential ?? '' : ''),
+      TextEditingValue(text: state is LoginInitial ? state.requestOTP.credential : ''),
     );
 
     ThemeData theme = Theme.of(context);
@@ -87,7 +87,7 @@ class _LoginScreen extends StatelessWidget {
                             context.read<LoginBloc>().add(
                                   RequestOTP(
                                     controller.text.isEmpty ? '' : '+91${controller.text}',
-                                    (state as LoginInitial).requestOTP?.receiveUpdate ?? false,
+                                    state.requestOTP.receiveUpdate,
                                   ),
                                 );
                           }
@@ -176,7 +176,7 @@ class _LoginScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is LoginInitial) {
             return Checkbox.adaptive(
-              value: state.requestOTP?.receiveUpdate ?? false,
+              value: state.requestOTP.receiveUpdate,
               onChanged: (value) {
                 context.read<LoginBloc>().add(CheckBoxChanged(value ?? false));
               },
@@ -189,7 +189,7 @@ class _LoginScreen extends StatelessWidget {
       onTap: () {
         context.read<LoginBloc>().add(
               CheckBoxChanged(
-                !((context.read<LoginBloc>().state as LoginInitial).requestOTP?.receiveUpdate ?? false),
+                !(context.read<LoginBloc>().state.requestOTP.receiveUpdate),
               ),
             );
       },

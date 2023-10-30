@@ -47,7 +47,10 @@ class AppRoute {
                 GoRoute(
                   name: 'otp',
                   path: 'otp',
-                  builder: (context, state) => VerifyOTPPage(bloc: state.extra as LoginBloc),
+                  builder: (context, state) => VerifyOTPPage(
+                    otpId: state.uri.queryParameters['otpId'] as String,
+                    loginBloc: state.extra as LoginBloc,
+                  ),
                 ),
               ],
             ),

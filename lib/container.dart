@@ -40,7 +40,8 @@ Future<void> initDependencies() async {
   // blocs
   GetIt.I.registerFactory<AppStartCubit>(() => AppStartCubit());
   GetIt.I.registerSingleton<AuthBloc>(AuthBloc(GetIt.I(), GetIt.I(), GetIt.I()));
-  GetIt.I.registerFactory<LoginBloc>(() => LoginBloc(GetIt.I(), GetIt.I()));
+  GetIt.I.registerFactory<LoginBloc>(() => LoginBloc(GetIt.I()));
+  GetIt.I.registerFactory<VerifyOtpBloc>(() => VerifyOtpBloc(GetIt.I()));
   GetIt.I.registerFactory<RegisterBloc>(() => RegisterBloc(GetIt.I()));
 }
 

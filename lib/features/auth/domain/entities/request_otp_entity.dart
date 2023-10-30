@@ -2,7 +2,7 @@ class RequestOTPEntity {
   final String credential;
   final bool receiveUpdate;
 
-  RequestOTPEntity({
+  const RequestOTPEntity({
     required this.credential,
     required this.receiveUpdate,
   });

@@ -2,19 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:keracars_app/features/auth/domain/entities/entities.dart';
 import 'package:keracars_app/features/auth/presentation/blocs/blocs.dart';
 
-class OTPTimeout extends StatefulWidget {
-  const OTPTimeout({super.key, required this.requestOTP});
-
-  final RequestOTPEntity requestOTP;
+class OTPTimer extends StatefulWidget {
+  const OTPTimer({super.key});
 
   @override
-  State<OTPTimeout> createState() => _OTPTimeoutState();
+  State<OTPTimer> createState() => _OTPTimerState();
 }
 
-class _OTPTimeoutState extends State<OTPTimeout> {
+class _OTPTimerState extends State<OTPTimer> {
   // ignore: unused_field
   late Timer _timer;
   final int _duration = 60;
@@ -80,10 +77,11 @@ class _OTPTimeoutState extends State<OTPTimeout> {
             InkWell(
               onTap: _countdown == 0
                   ? () {
+                      final loginState = context.read<LoginBloc>().state;
                       context.read<LoginBloc>().add(
                             RequestOTP(
-                              widget.requestOTP.credential,
-                              widget.requestOTP.receiveUpdate,
+                              loginState.requestOTP.credential,
+                              loginState.requestOTP.receiveUpdate,
                             ),
                           );
                       startTimer();
