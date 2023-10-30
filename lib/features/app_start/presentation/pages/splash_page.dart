@@ -25,9 +25,9 @@ class _SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 3), () {
-      AppStartState state = context.read<AppStartCubit>().state;
+    AppStartState state = context.read<AppStartCubit>().state;
 
+    Timer(const Duration(seconds: 3), () {
       if (state is AppStartOnboardingFinished) {
         context.go('/root');
         return;
