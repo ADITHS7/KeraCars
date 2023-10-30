@@ -3,12 +3,25 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keracars_app/core/widgets/widgets.dart';
 import 'package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => GetIt.I<AppStartCubit>(),
+      child: const _SplashScreen(),
+    );
+  }
+}
+
+class _SplashScreen extends StatelessWidget {
+  const _SplashScreen();
 
   @override
   Widget build(BuildContext context) {

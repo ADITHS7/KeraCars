@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
-import 'package:keracars_app/features/app_start/presentation/pages/app_start_page.dart';
 import 'package:keracars_app/features/app_start/presentation/pages/onboarding_page.dart';
+import 'package:keracars_app/features/app_start/presentation/pages/splash_page.dart';
 import 'package:keracars_app/features/auth/presentation/blocs/blocs.dart';
 import 'package:keracars_app/features/auth/presentation/pages/login_page.dart';
 import 'package:keracars_app/features/auth/presentation/pages/root_page.dart';
@@ -26,7 +26,7 @@ class AppRoute {
         GoRoute(
           name: 'start',
           path: '/start',
-          builder: (context, state) => const AppStartPage(),
+          builder: (context, state) => const SplashPage(),
         ),
         GoRoute(
           name: 'onboarding',
