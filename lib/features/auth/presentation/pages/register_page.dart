@@ -1,3 +1,4 @@
+import 'package:coolicons/coolicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -90,10 +91,11 @@ class _RegisterScreen extends StatelessWidget {
                 controller: phoneController,
                 prefixText: '+91 ',
                 isNumberInput: true,
+                autofocus: true,
                 prefixIcon: const Padding(
                   padding: EdgeInsets.only(left: 16, right: 8),
                   child: Icon(
-                    Icons.call_outlined,
+                    Coolicons.phone_outline,
                     size: 28,
                   ),
                 ),
