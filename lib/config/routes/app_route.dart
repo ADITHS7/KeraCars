@@ -3,6 +3,7 @@ import 'package:keracars_app/features/app_start/presentation/pages/onboarding_pa
 import 'package:keracars_app/features/app_start/presentation/pages/splash_page.dart';
 import 'package:keracars_app/features/auth/presentation/blocs/blocs.dart';
 import 'package:keracars_app/features/auth/presentation/pages/login_page.dart';
+import 'package:keracars_app/features/auth/presentation/pages/register_page.dart';
 import 'package:keracars_app/features/auth/presentation/pages/root_page.dart';
 import 'package:keracars_app/features/auth/presentation/pages/verify_otp_page.dart';
 
@@ -51,6 +52,11 @@ class AppRoute {
                     otpId: state.uri.queryParameters['otpId'] as String,
                     loginBloc: state.extra as LoginBloc,
                   ),
+                ),
+                GoRoute(
+                  name: 'register',
+                  path: 'register',
+                  builder: (context, state) => RegisterPage(bloc: state.extra as LoginBloc),
                 ),
               ],
             ),

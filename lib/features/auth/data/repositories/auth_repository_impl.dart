@@ -34,4 +34,16 @@ class AuthRepositoryImpl implements AuthRepository {
       return DataFailed(e);
     }
   }
+
+  @override
+  Future<DataState<bool>> registerUser(RegisterUserEntity registerUserEntity) async {
+    try {
+      final httpResponse = await _authService.registerUser(RegisterUserModel(
+        phone: registerUserEntity.phone,
+      ));
+      return DataSuccess(httpResponse.data['addedUser'] != null);
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
 }

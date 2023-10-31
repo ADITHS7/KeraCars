@@ -13,4 +13,7 @@ abstract class AuthService {
 
   @POST('authentications/otp')
   Future<HttpResponse<NewAuthModel>> postOTP(@Body() OTPLoginModel otpLogin);
+
+  @POST('users')
+  Future<HttpResponse> registerUser(@Body() RegisterUserModel registerUser);
 }
