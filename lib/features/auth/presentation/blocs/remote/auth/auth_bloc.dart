@@ -1,12 +1,12 @@
-import 'package:dio/dio.dart';
-import 'package:equatable/equatable.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:keracars_app/core/network/resources/data_state.dart';
-import 'package:keracars_app/features/auth/domain/entities/entities.dart';
-import 'package:keracars_app/features/auth/domain/usecases/usecases.dart';
+import "package:dio/dio.dart";
+import "package:equatable/equatable.dart";
+import "package:hydrated_bloc/hydrated_bloc.dart";
+import "package:keracars_app/core/network/resources/data_state.dart";
+import "package:keracars_app/features/auth/domain/entities/entities.dart";
+import "package:keracars_app/features/auth/domain/usecases/usecases.dart";
 
-part 'auth_event.dart';
-part 'auth_state.dart';
+part "auth_event.dart";
+part "auth_state.dart";
 
 class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
   AuthBloc(
@@ -52,7 +52,7 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
 
   @override
   AuthState? fromJson(Map<String, dynamic> json) {
-    if (json['authenticated'] == true) {
+    if (json["authenticated"] == true) {
       return AuthAuthenticated();
     }
     return AuthUnauthenticated();
@@ -60,6 +60,6 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
 
   @override
   Map<String, dynamic>? toJson(AuthState state) {
-    return {'authenticated': state is AuthAuthenticated};
+    return {"authenticated": state is AuthAuthenticated};
   }
 }

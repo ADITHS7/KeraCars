@@ -1,8 +1,8 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:keracars_app/features/auth/domain/entities/entities.dart';
+import "package:freezed_annotation/freezed_annotation.dart";
+import "package:keracars_app/features/auth/domain/entities/entities.dart";
 
-part 'otp_login_model.freezed.dart';
-part 'otp_login_model.g.dart';
+part "otp_login_model.freezed.dart";
+part "otp_login_model.g.dart";
 
 @freezed
 class OTPLoginModel extends OTPLoginEntity with _$OTPLoginModel {

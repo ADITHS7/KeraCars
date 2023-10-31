@@ -1,11 +1,11 @@
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:keracars_app/core/network/resources/data_state.dart';
-import 'package:keracars_app/features/auth/domain/entities/entities.dart';
-import 'package:keracars_app/features/auth/domain/usecases/usecases.dart';
+import "package:bloc/bloc.dart";
+import "package:equatable/equatable.dart";
+import "package:keracars_app/core/network/resources/data_state.dart";
+import "package:keracars_app/features/auth/domain/entities/entities.dart";
+import "package:keracars_app/features/auth/domain/usecases/usecases.dart";
 
-part 'verify_otp_event.dart';
-part 'verify_otp_state.dart';
+part "verify_otp_event.dart";
+part "verify_otp_state.dart";
 
 class VerifyOtpBloc extends Bloc<VerifyOtpEvent, VerifyOtpState> {
   VerifyOtpBloc(this._loginOTPUseCase) : super(const VerifyOtpInitial()) {

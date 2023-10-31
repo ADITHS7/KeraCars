@@ -1,24 +1,24 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
-import 'package:keracars_app/core/network/interceptors/exception_interceptor.dart';
-import 'package:keracars_app/core/network/interceptors/token_interceptor.dart';
-import 'package:keracars_app/core/network/service/services.dart';
-import 'package:keracars_app/core/security/token_service.dart';
-import 'package:keracars_app/core/storage/hive/hive_storage_service.dart';
-import 'package:keracars_app/core/storage/storage_service.dart';
-import 'package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart';
-import 'package:keracars_app/features/auth/data/datasources/datasources.dart';
-import 'package:keracars_app/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:keracars_app/features/auth/domain/repositories/auth_repository.dart';
-import 'package:keracars_app/features/auth/domain/usecases/usecases.dart';
-import 'package:keracars_app/features/auth/presentation/blocs/blocs.dart';
+import "package:dio/dio.dart";
+import "package:flutter_dotenv/flutter_dotenv.dart";
+import "package:get_it/get_it.dart";
+import "package:hive/hive.dart";
+import "package:keracars_app/core/network/interceptors/exception_interceptor.dart";
+import "package:keracars_app/core/network/interceptors/token_interceptor.dart";
+import "package:keracars_app/core/network/service/services.dart";
+import "package:keracars_app/core/security/token_service.dart";
+import "package:keracars_app/core/storage/hive/hive_storage_service.dart";
+import "package:keracars_app/core/storage/storage_service.dart";
+import "package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart";
+import "package:keracars_app/features/auth/data/datasources/datasources.dart";
+import "package:keracars_app/features/auth/data/repositories/auth_repository_impl.dart";
+import "package:keracars_app/features/auth/domain/repositories/auth_repository.dart";
+import "package:keracars_app/features/auth/domain/usecases/usecases.dart";
+import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
 
 Future<void> initDependencies() async {
   await initDio();
 
-  Box box = await Hive.openBox('__main__');
+  Box box = await Hive.openBox("__main__");
 
   // storage
   GetIt.I.registerSingleton<StorageService>(HiveStorageService(box: box));
@@ -48,12 +48,12 @@ Future<void> initDependencies() async {
 /// main dio
 Future<void> initDio() async {
   DioService dioService = DioService(
-    baseUrl: dotenv.get('API_SERVER_BASE_URL'),
+    baseUrl: dotenv.get("API_SERVER_BASE_URL"),
     contentType: Headers.jsonContentType,
   );
 
   // token storage
-  Box box = await Hive.openBox('___TOKEN\$\$\$___');
+  Box box = await Hive.openBox("___TOKEN\$\$\$___");
 
   GetIt.I.registerSingleton<TokenService>(TokenService(
     dio: dioService.getDio(),

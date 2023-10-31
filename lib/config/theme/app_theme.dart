@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class AppTheme {
   static ThemeData myTheme() => ThemeData(
@@ -8,7 +8,7 @@ class AppTheme {
           secondary: const Color(0xFFB6D25E),
         ),
         useMaterial3: true,
-        fontFamily: 'Poppins',
+        fontFamily: "Poppins",
         filledButtonTheme: FilledButtonThemeData(
           style: ButtonStyle(
             shape: MaterialStatePropertyAll(

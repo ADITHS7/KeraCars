@@ -1,8 +1,8 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:keracars_app/features/auth/presentation/blocs/blocs.dart';
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
 
 class OTPTimer extends StatefulWidget {
   const OTPTimer({super.key});
@@ -19,7 +19,7 @@ class _OTPTimerState extends State<OTPTimer> {
   // ignore: unused_field
   int _attempts = 0;
 
-  String _time = '00:00';
+  String _time = "00:00";
 
   void startTimer() {
     _attempts++;
@@ -31,11 +31,11 @@ class _OTPTimerState extends State<OTPTimer> {
           setState(() {
             _countdown--;
             if (_countdown < 10) {
-              _time = '00:0$_countdown';
+              _time = "00:0$_countdown";
             } else if (_countdown > 59) {
               _time = '0${(_countdown / 60).floor()}:${_countdown % 60 == 0 ? "00" : _countdown}';
             } else {
-              _time = '00:$_countdown';
+              _time = "00:$_countdown";
             }
             if (_countdown == 0) return timer.cancel();
           });

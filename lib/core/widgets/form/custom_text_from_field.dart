@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -73,7 +73,7 @@ class CustomTextFormField extends StatelessWidget {
         helperText: helperText,
         hintText: hintText,
         errorText: errorText,
-        counterText: counterText ?? ' ',
+        counterText: counterText ?? " ",
       ),
       keyboardType: isNumberInput ? const TextInputType.numberWithOptions(decimal: false) : null,
       inputFormatters: isNumberInput ? [FilteringTextInputFormatter.digitsOnly] : null,

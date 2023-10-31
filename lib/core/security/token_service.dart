@@ -1,5 +1,5 @@
-import 'package:dio/dio.dart';
-import 'package:keracars_app/core/storage/storage_service.dart';
+import "package:dio/dio.dart";
+import "package:keracars_app/core/storage/storage_service.dart";
 
 class TokenService {
   final Dio _dio;
@@ -8,8 +8,8 @@ class TokenService {
   String? _accessToken;
   String? _refreshToken;
 
-  static const String _accessTokenKey = 'keracars_accessToken';
-  static const String _refreshTokenKey = 'keracars_refreshToken';
+  static const String _accessTokenKey = "keracars_accessToken";
+  static const String _refreshTokenKey = "keracars_refreshToken";
 
   TokenService({
     required Dio dio,
@@ -53,18 +53,18 @@ class TokenService {
 
   Future<String?> getNewAccessToken() async {
     final Response response = await _dio.put(
-      '/authentications',
-      data: {'refreshToken': _refreshToken ?? await getRefreshToken()},
+      "/authentications",
+      data: {"refreshToken": _refreshToken ?? await getRefreshToken()},
     );
 
-    String token = response.data['accessToken'];
+    String token = response.data["accessToken"];
     await setAccessToken(token);
     return token;
   }
 
   void _setAccessTokenHeader({required String accessToken}) {
-    _dio.options.headers['Authorization'] = 'Bearer $accessToken';
+    _dio.options.headers["Authorization"] = "Bearer $accessToken";
   }
 
-  void _deleteAccessTokenHeader() => _dio.options.headers['Authorization'] = null;
+  void _deleteAccessTokenHeader() => _dio.options.headers["Authorization"] = null;
 }

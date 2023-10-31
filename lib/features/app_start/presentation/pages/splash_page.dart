@@ -1,12 +1,12 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
-import 'package:keracars_app/core/widgets/widgets.dart';
-import 'package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:flutter_svg/svg.dart";
+import "package:get_it/get_it.dart";
+import "package:go_router/go_router.dart";
+import "package:keracars_app/core/widgets/widgets.dart";
+import "package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart";
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -29,11 +29,11 @@ class _SplashScreen extends StatelessWidget {
 
     Timer(const Duration(seconds: 3), () {
       if (state is AppStartOnboardingFinished) {
-        context.go('/root');
+        context.go("/root");
         return;
       }
 
-      context.go('/onboarding');
+      context.go("/onboarding");
     });
 
     return Scaffold(body: _buildBody(context));
@@ -54,15 +54,15 @@ class _SplashScreen extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: SvgPicture.asset(
-                  'assets/svg/splash_image.svg',
-                  semanticsLabel: 'KeraCars Logo',
+                  "assets/svg/splash_image.svg",
+                  semanticsLabel: "KeraCars Logo",
                   width: MediaQuery.of(context).size.width * .35,
                 ),
               ),
               Expanded(
                 flex: 1,
                 child: Text(
-                  'Your Certified Car Companion,\nFrom TeamTech',
+                  "Your Certified Car Companion,\nFrom TeamTech",
                   style: theme.textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
