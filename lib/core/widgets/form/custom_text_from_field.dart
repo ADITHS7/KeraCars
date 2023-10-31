@@ -56,6 +56,7 @@ class CustomTextFormField extends StatelessWidget {
       obscureText: obscureText,
       onTap: onTap,
       readOnly: readOnly,
+      style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
       decoration: InputDecoration(
         filled: true,
         border: inputBorder,
