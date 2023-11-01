@@ -32,10 +32,10 @@ Future<void> initDependencies() async {
   // usecases
   GetIt.I.registerLazySingleton<GetOTPUseCase>(() => GetOTPUseCase(authRepository: GetIt.I()));
   GetIt.I.registerLazySingleton<LoginOTPUseCase>(() => LoginOTPUseCase(authRepository: GetIt.I()));
-  GetIt.I.registerSingleton<CheckAuthenticationUseCase>(CheckAuthenticationUseCase(tokenService: GetIt.I()));
+  GetIt.I.registerLazySingleton<CheckAuthenticationUseCase>(() => CheckAuthenticationUseCase(tokenService: GetIt.I()));
   GetIt.I.registerSingleton<AddAuthenticationUseCase>(AddAuthenticationUseCase(tokenService: GetIt.I()));
   GetIt.I.registerSingleton<RemoveAuthenticationUseCase>(RemoveAuthenticationUseCase(tokenService: GetIt.I()));
-  GetIt.I.registerSingleton<RegisterUserUseCase>(RegisterUserUseCase(authRepository: GetIt.I()));
+  GetIt.I.registerLazySingleton<RegisterUserUseCase>(() => RegisterUserUseCase(authRepository: GetIt.I()));
 
   // blocs
   GetIt.I.registerFactory<AppStartCubit>(() => AppStartCubit());
