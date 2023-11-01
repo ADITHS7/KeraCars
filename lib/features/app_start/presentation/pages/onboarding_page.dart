@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart';
-import 'package:keracars_app/features/app_start/presentation/widget/widget.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:go_router/go_router.dart";
+import "package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart";
+import "package:keracars_app/features/app_start/presentation/widget/widget.dart";
+import "package:smooth_page_indicator/smooth_page_indicator.dart";
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
@@ -37,23 +37,23 @@ class _OnboardingPageState extends State<_OnboardingPage> {
   List<Widget> screens = [
     const OnboardingScreen(
       svgAsset: "assets/svg/onboarding1.svg",
-      header: 'High-quality Certified Cars',
-      subHeader: 'Grow your business ahead with\n100% certified cars',
+      header: "High-quality Certified Cars",
+      subHeader: "Grow your business ahead with\n100% certified cars",
     ),
     const OnboardingScreen(
       svgAsset: "assets/svg/onboarding2.svg",
-      header: 'Detailed Inspection Reports',
-      subHeader: 'Explore our verified inspection reports for\nadded peace of mind',
+      header: "Detailed Inspection Reports",
+      subHeader: "Explore our verified inspection reports for\nadded peace of mind",
     ),
     const OnboardingScreen(
       svgAsset: "assets/svg/onboarding3.svg",
-      header: 'Bid with Confidence',
-      subHeader: 'Experience the ease of a transparent and\nuser-friendly bidding process',
+      header: "Bid with Confidence",
+      subHeader: "Experience the ease of a transparent and\nuser-friendly bidding process",
     ),
     const OnboardingScreen(
       svgAsset: "assets/svg/onboarding4.svg",
-      header: 'Support you can Trust',
-      subHeader: 'Enjoy hassle-free delivery, secure payments,\nand dedicated customer support',
+      header: "Support you can Trust",
+      subHeader: "Enjoy hassle-free delivery, secure payments,\nand dedicated customer support",
     ),
   ];
 
@@ -132,7 +132,7 @@ class _OnboardingPageState extends State<_OnboardingPage> {
                 onPressed: () {
                   context.read<AppStartCubit>().finishOnboarding();
 
-                  context.go('/root');
+                  context.go("/root");
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 36),

@@ -1,7 +1,7 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
 
 class ErrorAlertDialog extends StatelessWidget {
   const ErrorAlertDialog({super.key, this.contentText});
@@ -22,13 +22,13 @@ class ErrorAlertDialog extends StatelessWidget {
     return AlertDialog(
       title: const Text("Error"),
       content: Text(
-        contentText ?? 'Error',
+        contentText ?? "Error",
         style: const TextStyle(fontWeight: FontWeight.w600),
       ),
       actions: [
         TextButton(
           onPressed: () => context.pop(),
-          child: const Text('OK'),
+          child: const Text("OK"),
         )
       ],
     );

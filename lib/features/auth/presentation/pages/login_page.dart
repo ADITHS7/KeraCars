@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
-import 'package:keracars_app/core/error/network_exception.dart';
-import 'package:keracars_app/core/widgets/widgets.dart';
-import 'package:keracars_app/features/auth/presentation/blocs/blocs.dart';
-import 'package:keracars_app/features/auth/presentation/widgets/widgets.dart';
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:flutter_svg/svg.dart";
+import "package:get_it/get_it.dart";
+import "package:go_router/go_router.dart";
+import "package:keracars_app/core/error/network_exception.dart";
+import "package:keracars_app/core/widgets/widgets.dart";
+import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
+import "package:keracars_app/features/auth/presentation/widgets/widgets.dart";
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -30,7 +30,7 @@ class _LoginScreen extends StatelessWidget {
       listener: (_, state) {
         if (state is OTPRequestSuccess && !state.resending) {
           context.go(
-            context.namedLocation('otp', queryParameters: {'otpId': state.otpId}),
+            context.namedLocation("otp", queryParameters: {"otpId": state.otpId}),
             extra: context.read<LoginBloc>(),
           );
         } else if (state is OTPRequestError && state.exception != null) {
@@ -48,7 +48,7 @@ class _LoginScreen extends StatelessWidget {
     final state = context.read<LoginBloc>().state;
 
     final TextEditingController controller = TextEditingController.fromValue(
-      TextEditingValue(text: state is LoginInitial ? state.requestOTP.credential : ''),
+      TextEditingValue(text: state is LoginInitial ? state.requestOTP.credential : ""),
     );
 
     ThemeData theme = Theme.of(context);
@@ -72,7 +72,7 @@ class _LoginScreen extends StatelessWidget {
             CustomTextFormField(
               autofocus: true,
               controller: controller,
-              prefixText: '+91 ',
+              prefixText: "+91 ",
               isNumberInput: true,
             ),
             _checkboxTile(context),
@@ -86,7 +86,7 @@ class _LoginScreen extends StatelessWidget {
                         ? () {
                             context.read<LoginBloc>().add(
                                   RequestOTP(
-                                    controller.text.isEmpty ? '' : '+91${controller.text}',
+                                    controller.text.isEmpty ? "" : "+91${controller.text}",
                                     state.requestOTP.receiveUpdate,
                                   ),
                                 );
@@ -107,7 +107,7 @@ class _LoginScreen extends StatelessWidget {
                       WidgetSpan(
                         child: InkWell(
                           onTap: () => context.go(
-                            context.namedLocation('register'),
+                            context.namedLocation("register"),
                             extra: context.read<LoginBloc>(),
                           ),
                           child: Text(
@@ -166,12 +166,12 @@ class _LoginScreen extends StatelessWidget {
     ThemeData theme = Theme.of(context);
 
     return ListTile(
-      leading: SvgPicture.asset('assets/svg/whatsapp_icon.svg'),
+      leading: SvgPicture.asset("assets/svg/whatsapp_icon.svg"),
       title: Text(
-        'Get instant updates',
+        "Get instant updates",
         style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
       ),
-      subtitle: const Text('From Kera Cars on your whatsapp'),
+      subtitle: const Text("From Kera Cars on your whatsapp"),
       trailing: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
           if (state is LoginInitial) {

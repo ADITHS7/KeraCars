@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import "package:dio/dio.dart";
 
 class DioService {
   DioService({
@@ -15,7 +15,7 @@ class DioService {
 
   final Dio _dio;
 
-  Dio getDio() => _dio;
+  Dio get dio => _dio;
 
   static Dio createDio({
     required String baseUrl,
@@ -25,7 +25,7 @@ class DioService {
   }) {
     final Dio dio = Dio(
       BaseOptions(
-        headers: {'Authorization': 'Bearer $accessToken'},
+        headers: {"Authorization": "Bearer $accessToken"},
         baseUrl: baseUrl,
         receiveDataWhenStatusError: true,
         contentType: contentType,

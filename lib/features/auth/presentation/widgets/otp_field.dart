@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import "package:flutter/material.dart";
+import "package:flutter_otp_text_field/flutter_otp_text_field.dart";
 
 class OTPField extends StatelessWidget {
   const OTPField({
@@ -49,7 +49,7 @@ class OTPField extends StatelessWidget {
           focusedBorder: border,
           filled: true,
           fillColor: theme.colorScheme.primary.withAlpha(40),
-          counterText: '',
+          counterText: "",
         ),
       ),
     );

@@ -1,8 +1,8 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:keracars_app/features/auth/domain/entities/entities.dart';
+import "package:freezed_annotation/freezed_annotation.dart";
+import "package:keracars_app/features/auth/domain/entities/entities.dart";
 
-part 'new_auth_model.freezed.dart';
-part 'new_auth_model.g.dart';
+part "new_auth_model.freezed.dart";
+part "new_auth_model.g.dart";
 
 @freezed
 class NewAuthModel extends NewAuthEntity with _$NewAuthModel {

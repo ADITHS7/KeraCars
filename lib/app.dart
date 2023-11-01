@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:keracars_app/config/routes/app_route.dart';
-import 'package:keracars_app/config/theme/app_theme.dart';
+import "package:flutter/material.dart";
+import "package:keracars_app/config/routes/app_route.dart";
+import "package:keracars_app/config/theme/app_theme.dart";
 
 void startApp() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +16,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'KeraCars App',
+      title: "KeraCars App",
       theme: AppTheme.myTheme(),
       routerConfig: routerConfig,
     );

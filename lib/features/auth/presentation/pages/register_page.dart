@@ -1,14 +1,14 @@
-import 'package:coolicons/coolicons.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
-import 'package:keracars_app/core/error/network_exception.dart';
-import 'package:keracars_app/core/widgets/widgets.dart';
-import 'package:keracars_app/features/auth/domain/entities/entities.dart';
-import 'package:keracars_app/features/auth/presentation/blocs/blocs.dart';
-import 'package:keracars_app/features/auth/presentation/widgets/widgets.dart';
+import "package:coolicons/coolicons.dart";
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:fluttertoast/fluttertoast.dart";
+import "package:get_it/get_it.dart";
+import "package:go_router/go_router.dart";
+import "package:keracars_app/core/error/network_exception.dart";
+import "package:keracars_app/core/widgets/widgets.dart";
+import "package:keracars_app/features/auth/domain/entities/entities.dart";
+import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
+import "package:keracars_app/features/auth/presentation/widgets/widgets.dart";
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key, required LoginBloc bloc}) : _bloc = bloc;
@@ -41,8 +41,8 @@ class _RegisterScreen extends StatelessWidget {
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (_, state) async {
         if (state is RegisterSuccess) {
-          Fluttertoast.showToast(msg: 'Register successful');
-          context.go(context.namedLocation('login'));
+          Fluttertoast.showToast(msg: "Register successful");
+          context.go(context.namedLocation("login"));
           context.read<LoginBloc>().add(RequestOTP(state.registerUser.phone, false));
         } else if (state is RegisterError) {
           ErrorAlertDialog.show<String>(
@@ -89,7 +89,7 @@ class _RegisterScreen extends StatelessWidget {
               const SizedBox(height: 36),
               CustomTextFormField(
                 controller: phoneController,
-                prefixText: '+91 ',
+                prefixText: "+91 ",
                 isNumberInput: true,
                 autofocus: true,
                 prefixIcon: const Padding(
@@ -112,7 +112,7 @@ class _RegisterScreen extends StatelessWidget {
                               if (formKey.currentState?.validate() ?? false) {
                                 context.read<RegisterBloc>().add(
                                       RegisteringUser(
-                                        RegisterUserEntity(phone: '+91${phoneController.text}'),
+                                        RegisterUserEntity(phone: "+91${phoneController.text}"),
                                       ),
                                     );
                               }

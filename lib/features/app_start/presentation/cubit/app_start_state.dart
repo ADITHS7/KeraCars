@@ -1,4 +1,4 @@
-part of 'app_start_cubit.dart';
+part of "app_start_cubit.dart";
 
 sealed class AppStartState extends Equatable {
   const AppStartState();

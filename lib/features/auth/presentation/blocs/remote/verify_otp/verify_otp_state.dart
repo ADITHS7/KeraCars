@@ -1,9 +1,9 @@
-part of 'verify_otp_bloc.dart';
+part of "verify_otp_bloc.dart";
 
 sealed class VerifyOtpState extends Equatable {
   final String otpId;
 
-  const VerifyOtpState({this.otpId = ''});
+  const VerifyOtpState({this.otpId = ""});
 
   @override
   List<Object> get props => [otpId];

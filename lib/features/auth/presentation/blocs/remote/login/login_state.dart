@@ -1,11 +1,11 @@
-part of 'login_bloc.dart';
+part of "login_bloc.dart";
 
 sealed class LoginState extends Equatable {
   final RequestOTPEntity requestOTP;
 
   const LoginState({
     RequestOTPEntity? requestOTPEntity,
-  }) : requestOTP = requestOTPEntity ?? const RequestOTPEntity(credential: '', receiveUpdate: false);
+  }) : requestOTP = requestOTPEntity ?? const RequestOTPEntity(credential: "", receiveUpdate: false);
 
   @override
   List<Object> get props => [requestOTP];
