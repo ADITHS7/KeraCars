@@ -56,17 +56,17 @@ Future<void> initDio() async {
   Box box = await Hive.openBox("___TOKEN\$\$\$___");
 
   GetIt.I.registerSingleton<TokenService>(TokenService(
-    dio: dioService.getDio(),
+    dio: dioService.dio,
     storageService: HiveStorageService(box: box),
   ));
 
-  dioService.getDio().interceptors.addAll([
+  dioService.dio.interceptors.addAll([
     TokenInterceptor(
-      dio: dioService.getDio(),
+      dio: dioService.dio,
       tokenService: GetIt.I(),
     ),
-    ExceptionInterceptor(dio: dioService.getDio()),
+    ExceptionInterceptor(dio: dioService.dio),
   ]);
 
-  GetIt.I.registerSingleton<Dio>(dioService.getDio());
+  GetIt.I.registerSingleton<Dio>(dioService.dio);
 }

@@ -15,7 +15,7 @@ class DioService {
 
   final Dio _dio;
 
-  Dio getDio() => _dio;
+  Dio get dio => _dio;
 
   static Dio createDio({
     required String baseUrl,
