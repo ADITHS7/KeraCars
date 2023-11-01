@@ -1,4 +1,5 @@
 import "package:go_router/go_router.dart";
+import "package:keracars_app/config/routes/route_name.dart";
 import "package:keracars_app/features/app_start/presentation/pages/onboarding_page.dart";
 import "package:keracars_app/features/app_start/presentation/pages/splash_page.dart";
 import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
@@ -28,36 +29,36 @@ class AppRoute {
       routes: [
         GoRoute(path: "/", redirect: (context, state) => "/auth"),
         GoRoute(
-          name: "splash",
-          path: "/splash",
+          name: RouteName.splash,
+          path: $_RoutePath.splashPath,
           builder: (context, state) => const SplashPage(),
         ),
         GoRoute(
-          name: "onboarding",
-          path: "/onboarding",
+          name: RouteName.onboarding,
+          path: $_RoutePath.onboardingPath,
           builder: (context, state) => const OnboardingPage(),
         ),
         GoRoute(
-          name: "auth",
-          path: "/auth",
+          name: RouteName.auth,
+          path: $_RoutePath.authPath,
           builder: (context, state) => const RootAuthPage(),
           routes: [
             GoRoute(
-              name: "login",
-              path: "login",
+              name: RouteName.login,
+              path: $_RoutePath.loginPath,
               builder: (context, state) => const LoginPage(),
               routes: [
                 GoRoute(
-                  name: "otp",
-                  path: "otp",
+                  name: RouteName.otp,
+                  path: $_RoutePath.otpPath,
                   builder: (context, state) => VerifyOTPPage(
                     otpId: state.uri.queryParameters["otpId"] as String,
                     loginBloc: state.extra as LoginBloc,
                   ),
                 ),
                 GoRoute(
-                  name: "register",
-                  path: "register",
+                  name: RouteName.register,
+                  path: $_RoutePath.registerPath,
                   builder: (context, state) => RegisterPage(bloc: state.extra as LoginBloc),
                 ),
               ],
@@ -65,12 +66,12 @@ class AppRoute {
           ],
         ),
         GoRoute(
-          name: "greet",
+          name: RouteName.greet,
           path: "/greet",
           builder: (context, state) => const GreetingScreen(),
         ),
         GoRoute(
-          name: "home",
+          name: RouteName.home,
           path: "/home",
           builder: (context, state) => const HomePage(),
         ),

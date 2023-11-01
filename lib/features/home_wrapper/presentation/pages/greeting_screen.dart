@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_animate/flutter_animate.dart";
 import "package:go_router/go_router.dart";
+import "package:keracars_app/config/routes/route_name.dart";
 
 class GreetingScreen extends StatelessWidget {
   const GreetingScreen({super.key});
@@ -26,7 +27,7 @@ class GreetingScreen extends StatelessWidget {
                   autoPlay: true,
                   onComplete: (_) async {
                     await Future.delayed(const Duration(milliseconds: 800));
-                    if (context.mounted) context.go(context.namedLocation("home"));
+                    if (context.mounted) context.goNamed(RouteName.home);
                   },
                 )
                 .scale(

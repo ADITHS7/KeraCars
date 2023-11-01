@@ -3,6 +3,7 @@ import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_svg/svg.dart";
 import "package:get_it/get_it.dart";
 import "package:go_router/go_router.dart";
+import "package:keracars_app/config/routes/route_name.dart";
 import "package:keracars_app/core/error/network_exception.dart";
 import "package:keracars_app/core/widgets/widgets.dart";
 import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
@@ -29,8 +30,9 @@ class _LoginScreen extends StatelessWidget {
     return BlocListener<LoginBloc, LoginState>(
       listener: (_, state) {
         if (state is OTPRequestSuccess && !state.resending) {
-          context.go(
-            context.namedLocation("otp", queryParameters: {"otpId": state.otpId}),
+          context.goNamed(
+            RouteName.otp,
+            queryParameters: {"otpId": state.otpId},
             extra: context.read<LoginBloc>(),
           );
         } else if (state is OTPRequestError && state.exception != null) {
@@ -106,8 +108,8 @@ class _LoginScreen extends StatelessWidget {
                       const TextSpan(text: "Don't have an account? "),
                       WidgetSpan(
                         child: InkWell(
-                          onTap: () => context.go(
-                            context.namedLocation("register"),
+                          onTap: () => context.goNamed(
+                            RouteName.register,
                             extra: context.read<LoginBloc>(),
                           ),
                           child: Text(

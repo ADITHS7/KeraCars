@@ -4,6 +4,7 @@ import "package:flutter_bloc/flutter_bloc.dart";
 import "package:fluttertoast/fluttertoast.dart";
 import "package:get_it/get_it.dart";
 import "package:go_router/go_router.dart";
+import "package:keracars_app/config/routes/route_name.dart";
 import "package:keracars_app/core/error/network_exception.dart";
 import "package:keracars_app/core/widgets/widgets.dart";
 import "package:keracars_app/features/auth/domain/entities/entities.dart";
@@ -42,7 +43,7 @@ class _RegisterScreen extends StatelessWidget {
       listener: (_, state) async {
         if (state is RegisterSuccess) {
           Fluttertoast.showToast(msg: "Register successful");
-          context.go(context.namedLocation("login"));
+          context.goNamed(RouteName.login);
           context.read<LoginBloc>().add(RequestOTP(state.registerUser.phone, false));
         } else if (state is RegisterError) {
           ErrorAlertDialog.show<String>(

@@ -5,6 +5,7 @@ import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_svg/svg.dart";
 import "package:get_it/get_it.dart";
 import "package:go_router/go_router.dart";
+import "package:keracars_app/config/routes/route_name.dart";
 import "package:keracars_app/core/widgets/widgets.dart";
 import "package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart";
 
@@ -29,11 +30,11 @@ class _SplashScreen extends StatelessWidget {
 
     Timer(const Duration(seconds: 3), () {
       if (state is AppStartOnboardingFinished) {
-        context.go(context.namedLocation("auth"));
+        context.goNamed(RouteName.auth);
         return;
       }
 
-      context.go(context.namedLocation("onboarding"));
+      context.goNamed(RouteName.onboarding);
     });
 
     return Scaffold(body: _buildBody(context));
