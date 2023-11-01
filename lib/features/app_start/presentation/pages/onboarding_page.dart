@@ -132,7 +132,7 @@ class _OnboardingPageState extends State<_OnboardingPage> {
                 onPressed: () {
                   context.read<AppStartCubit>().finishOnboarding();
 
-                  context.go("/root");
+                  context.go(context.namedLocation("auth"));
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 36),

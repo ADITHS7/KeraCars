@@ -29,11 +29,11 @@ class _SplashScreen extends StatelessWidget {
 
     Timer(const Duration(seconds: 3), () {
       if (state is AppStartOnboardingFinished) {
-        context.go("/root");
+        context.go(context.namedLocation("auth"));
         return;
       }
 
-      context.go("/onboarding");
+      context.go(context.namedLocation("onboarding"));
     });
 
     return Scaffold(body: _buildBody(context));

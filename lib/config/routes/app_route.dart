@@ -4,7 +4,7 @@ import "package:keracars_app/features/app_start/presentation/pages/splash_page.d
 import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
 import "package:keracars_app/features/auth/presentation/pages/login_page.dart";
 import "package:keracars_app/features/auth/presentation/pages/register_page.dart";
-import "package:keracars_app/features/auth/presentation/pages/root_page.dart";
+import "package:keracars_app/features/auth/presentation/pages/root_auth_page.dart";
 import "package:keracars_app/features/auth/presentation/pages/verify_otp_page.dart";
 
 import "router_auth_notifier.dart";
@@ -23,7 +23,7 @@ class AppRoute {
       debugLogDiagnostics: true,
       initialLocation: "/start",
       routes: [
-        GoRoute(path: "/", redirect: (context, state) => "/root"),
+        GoRoute(path: "/", redirect: (context, state) => "/auth"),
         GoRoute(
           name: "start",
           path: "/start",
@@ -35,10 +35,9 @@ class AppRoute {
           builder: (context, state) => const OnboardingPage(),
         ),
         GoRoute(
-          name: "root",
-          path: "/root",
-          builder: (context, state) => const RootPage(),
-          redirect: routerAuthNotifier.redirect,
+          name: "auth",
+          path: "/auth",
+          builder: (context, state) => const RootAuthPage(),
           routes: [
             GoRoute(
               name: "login",

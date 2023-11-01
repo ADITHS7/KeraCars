@@ -3,8 +3,8 @@ import "package:flutter_bloc/flutter_bloc.dart";
 import "package:get_it/get_it.dart";
 import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
 
-class RootPage extends StatelessWidget {
-  const RootPage({super.key});
+class RootAuthPage extends StatelessWidget {
+  const RootAuthPage({super.key});
 
   @override
   Widget build(BuildContext context) {
