@@ -23,12 +23,13 @@ class AppRoute {
 
     return GoRouter(
       debugLogDiagnostics: true,
-      initialLocation: "/start",
+      initialLocation: "/splash",
+      redirect: routerAuthNotifier.redirect,
       routes: [
         GoRoute(path: "/", redirect: (context, state) => "/auth"),
         GoRoute(
-          name: "start",
-          path: "/start",
+          name: "splash",
+          path: "/splash",
           builder: (context, state) => const SplashPage(),
         ),
         GoRoute(
