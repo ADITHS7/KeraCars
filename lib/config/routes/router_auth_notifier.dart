@@ -5,28 +5,28 @@ import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
 
 class RouterAuthNotifier extends ChangeNotifier {
   RouterAuthNotifier() : _authBloc = GetIt.I<AuthBloc>() {
-    _authBloc.stream.listen((event) {
-      notifyListeners();
-    });
+    _authBloc.stream.listen((event) => notifyListeners());
   }
 
   final AuthBloc _authBloc;
 
-  String? redirect(BuildContext context, GoRouterState state) {
-    if (_authBloc.state is AuthInitial) return null;
+  final authPath = "/auth";
+  final loginPaths = ["/auth/login", "/auth/login/otp", "/auth/login/register"];
+  final excludePaths = ["/start", "/onboarding"];
 
-    final loginPaths = ["/root/login", "/root/login/otp", "/root/login/register"];
+  String? redirect(BuildContext context, GoRouterState state) {
+    final loggingIn = loginPaths.contains(state.fullPath) || state.fullPath == authPath;
+
+    if (_authBloc.state is AuthInitial || (_authBloc.state is AuthAuthenticated && !loggingIn) || excludePaths.contains(state.fullPath)) return null;
 
     // if the user is not logged in, they need to login
     final isAuthenticated = _authBloc.state is AuthAuthenticated;
-    final loggingIn = loginPaths.contains(state.fullPath);
 
     // bundle the location the user is coming from into a query parameter
-    final from = state.matchedLocation == "/root/home" ? "" : "?from=${state.fullPath}";
-    if (!isAuthenticated) return loggingIn ? null : "/root/login$from";
+    final from = "?from=${state.fullPath}";
+    if (!isAuthenticated) return loggingIn ? null : "/auth/login$from";
 
-    // if the user is logged in, send them where they were going before (or
-    // home if they weren't going anywhere)
-    return state.uri.queryParameters["from"] ?? "/root/home";
+    // if the user is logged in, send them where they were going before
+    return state.uri.queryParameters["from"] ?? (loggingIn ? "/greet" : "/home");
   }
 }
