@@ -6,6 +6,8 @@ import "package:keracars_app/features/auth/presentation/pages/login_page.dart";
 import "package:keracars_app/features/auth/presentation/pages/register_page.dart";
 import "package:keracars_app/features/auth/presentation/pages/root_auth_page.dart";
 import "package:keracars_app/features/auth/presentation/pages/verify_otp_page.dart";
+import "package:keracars_app/features/home_wrapper/presentation/pages/greeting_screen.dart";
+import "package:keracars_app/features/home_wrapper/presentation/pages/home_page.dart";
 
 import "router_auth_notifier.dart";
 
@@ -59,12 +61,17 @@ class AppRoute {
                 ),
               ],
             ),
-            GoRoute(
-              name: "home",
-              path: "home",
-              // builder: (context, state) => const Home(),
-            ),
           ],
+        ),
+        GoRoute(
+          name: "greet",
+          path: "/greet",
+          builder: (context, state) => const GreetingScreen(),
+        ),
+        GoRoute(
+          name: "home",
+          path: "/home",
+          builder: (context, state) => const HomePage(),
         ),
       ],
       refreshListenable: routerAuthNotifier,
