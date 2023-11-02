@@ -24,19 +24,23 @@ class SplashPage extends StatelessWidget {
 class _SplashScreen extends StatelessWidget {
   const _SplashScreen();
 
-  @override
-  Widget build(BuildContext context) {
+  void splashing(BuildContext context) {
     AppStartState state = context.read<AppStartCubit>().state;
 
-    Timer(const Duration(seconds: 3), () {
-      if (state is AppStartOnboardingFinished) {
-        context.goNamed(RouteName.auth);
-        return;
-      }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 3), () async {
+        if (state is AppStartOnboardingFinished) {
+          return context.goNamed(RouteName.auth);
+        }
 
-      context.goNamed(RouteName.onboarding);
+        context.goNamed(RouteName.onboarding);
+      });
     });
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    splashing(context);
     return Scaffold(body: _buildBody(context));
   }
 
