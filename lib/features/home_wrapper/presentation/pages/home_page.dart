@@ -1,31 +1,47 @@
 import "package:flutter/material.dart";
-import "package:get_it/get_it.dart";
-import "package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart";
-import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
+import "package:go_router/go_router.dart";
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({
+    super.key,
+    required this.navigationShell,
+  });
+
+  final StatefulNavigationShell navigationShell;
+
+  void _goBranch(int index) {
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    // ThemeData theme = Theme.of(context);
+
     return Scaffold(
-      appBar: AppBar(title: const Text("HOME")),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text("This is the home page"),
-            FilledButton.tonal(
-              onPressed: () => GetIt.I<AuthBloc>().add(RemoveAuthentication()),
-              child: const Text("Logout"),
-            ),
-            const SizedBox(height: 8),
-            FilledButton.tonal(
-              onPressed: () => GetIt.I<AppStartCubit>().goToPage(0),
-              child: const Text("Reset onboarding"),
-            ),
-          ],
-        ),
+      body: navigationShell,
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: navigationShell.currentIndex,
+        onDestinationSelected: _goBranch,
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.explore_outlined),
+            selectedIcon: Icon(Icons.explore),
+            label: "Explore",
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.label_outline),
+            selectedIcon: Icon(Icons.label),
+            label: "My Auctions",
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outline),
+            selectedIcon: Icon(Icons.person),
+            label: "Account",
+          ),
+        ],
       ),
     );
   }

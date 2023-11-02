@@ -1,3 +1,4 @@
+import "package:flutter/widgets.dart";
 import "package:go_router/go_router.dart";
 import "package:keracars_app/config/routes/route_name.dart";
 import "package:keracars_app/features/app_start/presentation/pages/onboarding_page.dart";
@@ -7,6 +8,7 @@ import "package:keracars_app/features/auth/presentation/pages/login_page.dart";
 import "package:keracars_app/features/auth/presentation/pages/register_page.dart";
 import "package:keracars_app/features/auth/presentation/pages/root_auth_page.dart";
 import "package:keracars_app/features/auth/presentation/pages/verify_otp_page.dart";
+import "package:keracars_app/features/home_wrapper/presentation/pages/dummy_pages.dart";
 import "package:keracars_app/features/home_wrapper/presentation/pages/greeting_screen.dart";
 import "package:keracars_app/features/home_wrapper/presentation/pages/home_page.dart";
 
@@ -19,15 +21,18 @@ class AppRoute {
 
   GoRouter get goRouter => _goRouter;
 
+  static final rootNavigatorKey = GlobalKey<NavigatorState>();
+
   static GoRouter init() {
     final RouterAuthNotifier routerAuthNotifier = RouterAuthNotifier();
 
     return GoRouter(
       debugLogDiagnostics: true,
-      initialLocation: "/splash",
+      initialLocation: $_RoutePath.splashPath,
+      navigatorKey: rootNavigatorKey,
       redirect: routerAuthNotifier.redirect,
       routes: [
-        GoRoute(path: "/", redirect: (context, state) => "/auth"),
+        GoRoute(path: "/", redirect: (context, state) => $_RoutePath.authPath),
         GoRoute(
           name: RouteName.splash,
           path: $_RoutePath.splashPath,
@@ -70,10 +75,44 @@ class AppRoute {
           path: "/greet",
           builder: (context, state) => const GreetingScreen(),
         ),
-        GoRoute(
-          name: RouteName.home,
-          path: "/home",
-          builder: (context, state) => const HomePage(),
+        StatefulShellRoute.indexedStack(
+          parentNavigatorKey: rootNavigatorKey,
+          builder: (context, state, navigationShell) => HomePage(navigationShell: navigationShell),
+          branches: [
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  name: RouteName.home,
+                  path: "/home",
+                  pageBuilder: (context, state) => const NoTransitionPage(child: PageA()),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: "/b",
+                  pageBuilder: (context, state) => const NoTransitionPage(child: PageB()),
+                  routes: [
+                    GoRoute(
+                      path: "sub-b",
+                      name: "sub-b",
+                      parentNavigatorKey: rootNavigatorKey,
+                      builder: (context, state) => const SubPageB(),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: "/c",
+                  pageBuilder: (context, state) => const NoTransitionPage(child: PageC()),
+                ),
+              ],
+            ),
+          ],
         ),
       ],
       refreshListenable: routerAuthNotifier,

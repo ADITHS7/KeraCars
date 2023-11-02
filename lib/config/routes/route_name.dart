@@ -5,6 +5,10 @@ class $_RoutePath {
   static const String loginPath = "login";
   static const String otpPath = "otp";
   static const String registerPath = "register";
+
+  static const String loginFullPath = "$authPath/$loginPath";
+  static const String otpFullPath = "$authPath/$loginPath/$otpPath";
+  static const String registerFullPath = "$authPath/$loginPath/$registerPath";
 }
 
 class RouteName {

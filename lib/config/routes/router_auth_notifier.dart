@@ -11,7 +11,11 @@ class RouterAuthNotifier extends ChangeNotifier {
 
   final AuthBloc _authBloc;
 
-  final authRoutePaths = [$_RoutePath.loginPath, $_RoutePath.otpPath, $_RoutePath.registerPath];
+  final authRoutePaths = [
+    $_RoutePath.loginFullPath,
+    $_RoutePath.otpFullPath,
+    $_RoutePath.registerFullPath,
+  ];
   final excludeRoutePaths = [$_RoutePath.splashPath, $_RoutePath.onboardingPath];
 
   String? redirect(BuildContext context, GoRouterState state) {
