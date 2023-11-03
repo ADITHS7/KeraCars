@@ -105,10 +105,8 @@ class _VerifyOTPPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             OTPField(
-              onSubmit: (value) {
-                controller.text = value;
-                _submitOtp(context, otp: value);
-              },
+              controller: controller,
+              onSubmit: (value) => _submitOtp(context, otp: value),
             ),
             const SizedBox(height: 36),
             Center(
