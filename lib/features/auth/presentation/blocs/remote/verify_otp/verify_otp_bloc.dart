@@ -21,8 +21,8 @@ class VerifyOtpBloc extends Bloc<VerifyOtpEvent, VerifyOtpState> {
     final dataState = await _loginOTPUseCase.execute(params: event.otpLogin);
 
     if (dataState is DataFailed) {
-      return emit(SignInRequestError(dataState.error));
+      return emit(SignInRequestError(dataState.error, otpId: event.otpLogin.id));
     }
-    return emit(SignInRequestSuccess(dataState.data!));
+    return emit(SignInRequestSuccess(dataState.data!, otpId: event.otpLogin.id));
   }
 }

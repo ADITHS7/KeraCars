@@ -4,9 +4,11 @@ import "package:flutter_otp_text_field/flutter_otp_text_field.dart";
 class OTPField extends StatelessWidget {
   const OTPField({
     super.key,
+    required this.controller,
     required this.onSubmit,
   });
 
+  final TextEditingController controller;
   final void Function(String) onSubmit;
 
   @override
@@ -27,6 +29,9 @@ class OTPField extends StatelessWidget {
     return SizedBox(
       height: 96,
       child: OtpTextField(
+        handleControllers: (c) {
+          controller.text = c.map((e) => e?.text ?? "").toList().join();
+        },
         margin: const EdgeInsets.all(0),
         filled: true,
         hasCustomInputDecoration: true,

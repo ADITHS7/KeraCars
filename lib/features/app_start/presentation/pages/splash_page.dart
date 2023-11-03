@@ -5,6 +5,7 @@ import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_svg/svg.dart";
 import "package:get_it/get_it.dart";
 import "package:go_router/go_router.dart";
+import "package:keracars_app/config/routes/route_name.dart";
 import "package:keracars_app/core/widgets/widgets.dart";
 import "package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart";
 
@@ -23,19 +24,23 @@ class SplashPage extends StatelessWidget {
 class _SplashScreen extends StatelessWidget {
   const _SplashScreen();
 
-  @override
-  Widget build(BuildContext context) {
+  void splashing(BuildContext context) {
     AppStartState state = context.read<AppStartCubit>().state;
 
-    Timer(const Duration(seconds: 3), () {
-      if (state is AppStartOnboardingFinished) {
-        context.go("/root");
-        return;
-      }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 3), () async {
+        if (state is AppStartOnboardingFinished) {
+          return context.goNamed(RouteName.auth);
+        }
 
-      context.go("/onboarding");
+        context.goNamed(RouteName.onboarding);
+      });
     });
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    splashing(context);
     return Scaffold(body: _buildBody(context));
   }
 

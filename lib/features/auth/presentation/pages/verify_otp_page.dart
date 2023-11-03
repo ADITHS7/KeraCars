@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:get_it/get_it.dart";
 import "package:go_router/go_router.dart";
+import "package:keracars_app/config/routes/route_name.dart";
 import "package:keracars_app/core/error/network_exception.dart";
 import "package:keracars_app/features/auth/data/models/otp_login_model.dart";
 import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
@@ -96,7 +97,7 @@ class _VerifyOTPPage extends StatelessWidget {
             _subheader(context),
             const SizedBox(height: 16),
             InkWell(
-              onTap: () => context.go(context.namedLocation("login")),
+              onTap: () => context.goNamed(RouteName.login),
               child: Text(
                 "Edit number",
                 style: TextStyle(color: theme.colorScheme.primary),
@@ -104,10 +105,8 @@ class _VerifyOTPPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             OTPField(
-              onSubmit: (value) {
-                controller.text = value;
-                _submitOtp(context, otp: value);
-              },
+              controller: controller,
+              onSubmit: (value) => _submitOtp(context, otp: value),
             ),
             const SizedBox(height: 36),
             Center(
