@@ -29,12 +29,14 @@ Future<void> initDependencies() async {
   // repositories
   GetIt.I.registerSingleton<AuthRepository>(AuthRepositoryImpl(authService: GetIt.I()));
 
+  await setupDio();
+
   // usecases
   GetIt.I.registerLazySingleton<GetOTPUseCase>(() => GetOTPUseCase(authRepository: GetIt.I()));
   GetIt.I.registerLazySingleton<LoginOTPUseCase>(() => LoginOTPUseCase(authRepository: GetIt.I()));
   GetIt.I.registerLazySingleton<CheckAuthenticationUseCase>(() => CheckAuthenticationUseCase(tokenService: GetIt.I()));
   GetIt.I.registerSingleton<AddAuthenticationUseCase>(AddAuthenticationUseCase(tokenService: GetIt.I()));
-  GetIt.I.registerSingleton<RemoveAuthenticationUseCase>(RemoveAuthenticationUseCase(tokenService: GetIt.I()));
+  GetIt.I.registerSingleton<RemoveAuthenticationUseCase>(RemoveAuthenticationUseCase(tokenService: GetIt.I(), authRepository: GetIt.I()));
   GetIt.I.registerLazySingleton<RegisterUserUseCase>(() => RegisterUserUseCase(authRepository: GetIt.I()));
 
   // blocs
@@ -52,21 +54,29 @@ Future<void> initDio() async {
     contentType: Headers.jsonContentType,
   );
 
-  // token storage
+  GetIt.I.registerSingleton<DioService>(dioService);
+  GetIt.I.registerSingleton<Dio>(dioService.dio);
+}
+
+Future<void> setupDio() async {
+  DioService dioService = GetIt.I<DioService>();
+
+  // custom token storage
   Box box = await Hive.openBox("___TOKEN\$\$\$___");
 
   GetIt.I.registerSingleton<TokenService>(TokenService(
-    dio: dioService.dio,
+    dioService: dioService,
+    authRepository: GetIt.I(),
     storageService: HiveStorageService(box: box),
   ));
 
   dioService.dio.interceptors.addAll([
     TokenInterceptor(
-      dio: dioService.dio,
-      tokenService: GetIt.I(),
+      dio: GetIt.I<Dio>(),
+      tokenService: GetIt.I<TokenService>(),
     ),
     ExceptionInterceptor(dio: dioService.dio),
   ]);
 
-  GetIt.I.registerSingleton<Dio>(dioService.dio);
+  await GetIt.I.unregister<DioService>();
 }

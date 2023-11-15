@@ -1,8 +1,11 @@
-import "package:dio/dio.dart";
+import "package:keracars_app/core/network/resources/data_state.dart";
+import "package:keracars_app/core/network/service/services.dart";
 import "package:keracars_app/core/storage/storage_service.dart";
+import "package:keracars_app/features/auth/domain/repositories/repositories.dart";
 
 class TokenService {
-  final Dio _dio;
+  final DioService _dioService;
+  final AuthRepository _authRepository;
   final StorageService _storageService;
 
   String? _accessToken;
@@ -12,13 +15,15 @@ class TokenService {
   static const String _refreshTokenKey = "keracars_refreshToken";
 
   TokenService({
-    required Dio dio,
+    required DioService dioService,
     required StorageService storageService,
-  })  : _dio = dio,
-        _storageService = storageService;
+    required AuthRepository authRepository,
+  })  : _dioService = dioService,
+        _storageService = storageService,
+        _authRepository = authRepository;
 
   Future<void> setAccessToken(String token) async {
-    _setAccessTokenHeader(accessToken: token);
+    _dioService.setAccessTokenHeader(accessToken: token);
     await _storageService.set(_accessTokenKey, token);
   }
 
@@ -30,7 +35,7 @@ class TokenService {
   }
 
   Future<void> deleteAccessToken() async {
-    _deleteAccessTokenHeader();
+    _dioService.deleteAccessTokenHeader();
     _accessToken = null;
     await _storageService.delete(_accessTokenKey);
   }
@@ -51,20 +56,13 @@ class TokenService {
     await _storageService.delete(_refreshTokenKey);
   }
 
+  /// refresh authentications
   Future<String?> getNewAccessToken() async {
-    final Response response = await _dio.put(
-      "/authentications",
-      data: {"refreshToken": _refreshToken ?? await getRefreshToken()},
-    );
+    final dataState = await _authRepository.refreshAccessToken(_refreshToken ?? await getRefreshToken() ?? "would fail");
+    if (dataState is DataFailed) throw dataState.error!;
 
-    String token = response.data["accessToken"];
+    String token = dataState.data!;
     await setAccessToken(token);
     return token;
   }
-
-  void _setAccessTokenHeader({required String accessToken}) {
-    _dio.options.headers["Authorization"] = "Bearer $accessToken";
-  }
-
-  void _deleteAccessTokenHeader() => _dio.options.headers["Authorization"] = null;
 }

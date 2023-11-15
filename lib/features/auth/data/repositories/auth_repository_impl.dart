@@ -46,4 +46,24 @@ class AuthRepositoryImpl implements AuthRepository {
       return DataFailed(e);
     }
   }
+
+  @override
+  Future<DataState<String>> refreshAccessToken(String refreshToken) async {
+    try {
+      final httpResponse = await _authService.refreshAccessToken({"refreshToken": refreshToken});
+      return DataSuccess(httpResponse.data["accessToken"]!);
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<bool>> logoutUser(String refreshToken) async {
+    try {
+      final httpResponse = await _authService.logoutUser({"refreshToken": refreshToken});
+      return DataSuccess(httpResponse.data["status"] == "success");
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
 }

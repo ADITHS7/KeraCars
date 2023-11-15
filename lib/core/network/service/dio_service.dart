@@ -36,4 +36,10 @@ class DioService {
 
     return dio;
   }
+
+  void setAccessTokenHeader({required String accessToken}) {
+    _dio.options.headers["Authorization"] = "Bearer $accessToken";
+  }
+
+  void deleteAccessTokenHeader() => _dio.options.headers["Authorization"] = null;
 }

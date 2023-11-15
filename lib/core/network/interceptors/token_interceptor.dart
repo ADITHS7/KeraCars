@@ -29,7 +29,6 @@ class TokenInterceptor extends Interceptor {
         }
       } catch (_) {
         GetIt.I<AuthBloc>().add(RemoveAuthentication());
-        return handler.next(err);
       }
     }
     return handler.next(err);

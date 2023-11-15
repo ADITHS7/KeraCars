@@ -14,6 +14,14 @@ abstract class AuthService {
   @POST("authentications/otp")
   Future<HttpResponse<NewAuthModel>> postOTP(@Body() OTPLoginModel otpLogin);
 
+  /// [body] {'refreshToken': String}
+  @PUT("authentications")
+  Future<HttpResponse<Map<String, String>>> refreshAccessToken(@Body() Map<String, String> body);
+
+  /// [body] {'refreshToken': String}
+  @DELETE("authentications")
+  Future<HttpResponse<Map<String, String>>> logoutUser(@Body() Map<String, String> body);
+
   @POST("users")
   Future<HttpResponse> registerUser(@Body() RegisterUserModel registerUser);
 }
