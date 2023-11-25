@@ -1,28 +1,28 @@
 part of "login_bloc.dart";
 
 sealed class LoginState extends Equatable {
-  final RequestOTPEntity requestOTP;
+  final RequestOTPModel requestOTPModel;
 
   const LoginState({
-    RequestOTPEntity? requestOTPEntity,
-  }) : requestOTP = requestOTPEntity ?? const RequestOTPEntity(credential: "", receiveUpdate: false);
+    RequestOTPModel? requestOTPModel,
+  }) : requestOTPModel = requestOTPModel ?? const RequestOTPModel(credential: "", receiveUpdate: false);
 
   @override
-  List<Object> get props => [requestOTP];
+  List<Object> get props => [requestOTPModel];
 }
 
 final class LoginInitial extends LoginState {
-  const LoginInitial({super.requestOTPEntity});
+  const LoginInitial({super.requestOTPModel});
 }
 
 final class OTPRequestLoading extends LoginState {
-  const OTPRequestLoading({super.requestOTPEntity});
+  const OTPRequestLoading({super.requestOTPModel});
 }
 
 final class OTPRequestError extends LoginState {
   final Exception? exception;
 
-  const OTPRequestError({super.requestOTPEntity, this.exception});
+  const OTPRequestError({super.requestOTPModel, this.exception});
 
   @override
   List<Object> get props => [exception ?? Exception()];
@@ -34,7 +34,7 @@ final class OTPRequestSuccess extends LoginState {
 
   const OTPRequestSuccess({
     required this.otpId,
-    required super.requestOTPEntity,
+    required super.requestOTPModel,
     required this.resending,
   });
 

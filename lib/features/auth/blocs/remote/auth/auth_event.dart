@@ -10,7 +10,7 @@ sealed class AuthEvent extends Equatable {
 class CheckAuthentication extends AuthEvent {}
 
 class AddAuthentication extends AuthEvent {
-  final NewAuthEntity newAuth;
+  final NewAuthModel newAuth;
 
   const AddAuthentication(this.newAuth);
 

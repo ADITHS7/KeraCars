@@ -7,7 +7,7 @@ import "package:get_it/get_it.dart";
 import "package:go_router/go_router.dart";
 import "package:keracars_app/config/routes/route_name.dart";
 import "package:keracars_app/core/widgets/widgets.dart";
-import "package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart";
+import "package:keracars_app/features/app_start/cubit/app_start_cubit.dart";
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});

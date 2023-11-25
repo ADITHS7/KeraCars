@@ -7,8 +7,8 @@ import "package:go_router/go_router.dart";
 import "package:keracars_app/config/routes/route_name.dart";
 import "package:keracars_app/core/error/network_exception.dart";
 import "package:keracars_app/core/widgets/widgets.dart";
-import "package:keracars_app/features/auth/domain/entities/entities.dart";
-import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
+import "package:keracars_app/features/auth/blocs/blocs.dart";
+import "package:keracars_app/features/auth/data/models/models.dart";
 import "package:keracars_app/features/auth/presentation/widgets/widgets.dart";
 
 class RegisterPage extends StatelessWidget {
@@ -113,7 +113,7 @@ class _RegisterScreen extends StatelessWidget {
                               if (formKey.currentState?.validate() ?? false) {
                                 context.read<RegisterBloc>().add(
                                       RegisteringUser(
-                                        RegisterUserEntity(phone: "+91${phoneController.text}"),
+                                        RegisterUserModel(phone: "+91${phoneController.text}"),
                                       ),
                                     );
                               }

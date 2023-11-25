@@ -8,7 +8,7 @@ sealed class RegisterEvent extends Equatable {
 }
 
 class RegisteringUser extends RegisterEvent {
-  final RegisterUserEntity registerUser;
+  final RegisterUserModel registerUser;
 
   const RegisteringUser(this.registerUser);
 

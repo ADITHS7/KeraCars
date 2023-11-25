@@ -1,7 +1,7 @@
 import "package:keracars_app/core/network/resources/data_state.dart";
 import "package:keracars_app/core/network/service/services.dart";
 import "package:keracars_app/core/storage/storage_service.dart";
-import "package:keracars_app/features/auth/domain/repositories/repositories.dart";
+import "package:keracars_app/features/auth/data/repositories/repositories.dart";
 
 class TokenService {
   final DioService _dioService;

@@ -3,7 +3,7 @@ import "package:go_router/go_router.dart";
 import "package:keracars_app/config/routes/route_name.dart";
 import "package:keracars_app/features/app_start/presentation/pages/onboarding_page.dart";
 import "package:keracars_app/features/app_start/presentation/pages/splash_page.dart";
-import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
+import "package:keracars_app/features/auth/blocs/blocs.dart";
 import "package:keracars_app/features/auth/presentation/pages/login_page.dart";
 import "package:keracars_app/features/auth/presentation/pages/register_page.dart";
 import "package:keracars_app/features/auth/presentation/pages/root_auth_page.dart";

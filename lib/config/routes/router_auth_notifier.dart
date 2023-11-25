@@ -2,7 +2,7 @@ import "package:flutter/widgets.dart";
 import "package:get_it/get_it.dart";
 import "package:go_router/go_router.dart";
 import "package:keracars_app/config/routes/route_name.dart";
-import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
+import "package:keracars_app/features/auth/blocs/blocs.dart";
 
 class RouterAuthNotifier extends ChangeNotifier {
   RouterAuthNotifier() : _authBloc = GetIt.I<AuthBloc>() {

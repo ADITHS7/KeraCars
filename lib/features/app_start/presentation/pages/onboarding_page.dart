@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:go_router/go_router.dart";
 import "package:keracars_app/config/routes/route_name.dart";
-import "package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart";
+import "package:keracars_app/features/app_start/cubit/app_start_cubit.dart";
 import "package:keracars_app/features/app_start/presentation/widget/widget.dart";
 import "package:smooth_page_indicator/smooth_page_indicator.dart";
 
