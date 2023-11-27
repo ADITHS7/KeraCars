@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_animate/flutter_animate.dart";
 import "package:go_router/go_router.dart";
 import "package:keracars_app/config/routes/route_name.dart";
+import "package:keracars_app/core/widgets/widgets.dart";
 
 class GreetingScreen extends StatelessWidget {
   const GreetingScreen({super.key});
@@ -58,6 +59,13 @@ class GreetingScreen extends StatelessWidget {
                   delay: const Duration(milliseconds: 1500),
                   duration: const Duration(milliseconds: 800),
                 ),
+            const Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 48),
+                child: CustomCircularProgress(),
+              ),
+            ),
           ],
         ),
       ),
