@@ -8,12 +8,10 @@ import "package:keracars_app/core/network/service/services.dart";
 import "package:keracars_app/core/security/token_service.dart";
 import "package:keracars_app/core/storage/hive/hive_storage_service.dart";
 import "package:keracars_app/core/storage/storage_service.dart";
-import "package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart";
+import "package:keracars_app/features/app_start/cubit/app_start_cubit.dart";
+import "package:keracars_app/features/auth/blocs/blocs.dart";
 import "package:keracars_app/features/auth/data/datasources/datasources.dart";
-import "package:keracars_app/features/auth/data/repositories/auth_repository_impl.dart";
-import "package:keracars_app/features/auth/domain/repositories/auth_repository.dart";
-import "package:keracars_app/features/auth/domain/usecases/usecases.dart";
-import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
+import "package:keracars_app/features/auth/data/repositories/auth_repository.dart";
 
 Future<void> initDependencies() async {
   await initDio();
@@ -27,21 +25,13 @@ Future<void> initDependencies() async {
   GetIt.I.registerSingleton<AuthService>(AuthService(GetIt.I()));
 
   // repositories
-  GetIt.I.registerSingleton<AuthRepository>(AuthRepositoryImpl(authService: GetIt.I()));
+  GetIt.I.registerSingleton<AuthRepository>(AuthRepository(authService: GetIt.I()));
 
   await setupDio();
 
-  // usecases
-  GetIt.I.registerLazySingleton<GetOTPUseCase>(() => GetOTPUseCase(authRepository: GetIt.I()));
-  GetIt.I.registerLazySingleton<LoginOTPUseCase>(() => LoginOTPUseCase(authRepository: GetIt.I()));
-  GetIt.I.registerLazySingleton<CheckAuthenticationUseCase>(() => CheckAuthenticationUseCase(tokenService: GetIt.I()));
-  GetIt.I.registerSingleton<AddAuthenticationUseCase>(AddAuthenticationUseCase(tokenService: GetIt.I()));
-  GetIt.I.registerSingleton<RemoveAuthenticationUseCase>(RemoveAuthenticationUseCase(tokenService: GetIt.I(), authRepository: GetIt.I()));
-  GetIt.I.registerLazySingleton<RegisterUserUseCase>(() => RegisterUserUseCase(authRepository: GetIt.I()));
-
   // blocs
   GetIt.I.registerFactory<AppStartCubit>(() => AppStartCubit());
-  GetIt.I.registerSingleton<AuthBloc>(AuthBloc(GetIt.I(), GetIt.I(), GetIt.I()));
+  GetIt.I.registerSingleton<AuthBloc>(AuthBloc(GetIt.I(), GetIt.I()));
   GetIt.I.registerFactory<LoginBloc>(() => LoginBloc(GetIt.I()));
   GetIt.I.registerFactory<VerifyOtpBloc>(() => VerifyOtpBloc(GetIt.I()));
   GetIt.I.registerFactory<RegisterBloc>(() => RegisterBloc(GetIt.I()));

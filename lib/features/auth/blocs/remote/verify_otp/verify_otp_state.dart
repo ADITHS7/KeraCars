@@ -27,7 +27,7 @@ final class SignInRequestError extends VerifyOtpState {
 }
 
 final class SignInRequestSuccess extends VerifyOtpState {
-  final NewAuthEntity newAuth;
+  final NewAuthModel newAuth;
 
   const SignInRequestSuccess(this.newAuth, {super.otpId});
 

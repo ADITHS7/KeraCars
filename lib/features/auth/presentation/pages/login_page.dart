@@ -6,7 +6,7 @@ import "package:go_router/go_router.dart";
 import "package:keracars_app/config/routes/route_name.dart";
 import "package:keracars_app/core/error/network_exception.dart";
 import "package:keracars_app/core/widgets/widgets.dart";
-import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
+import "package:keracars_app/features/auth/blocs/blocs.dart";
 import "package:keracars_app/features/auth/presentation/widgets/widgets.dart";
 
 class LoginPage extends StatelessWidget {
@@ -50,7 +50,7 @@ class _LoginScreen extends StatelessWidget {
     final state = context.read<LoginBloc>().state;
 
     final TextEditingController controller = TextEditingController.fromValue(
-      TextEditingValue(text: state is LoginInitial ? state.requestOTP.credential : ""),
+      TextEditingValue(text: state is LoginInitial ? state.requestOTPModel.credential : ""),
     );
 
     ThemeData theme = Theme.of(context);
@@ -89,7 +89,7 @@ class _LoginScreen extends StatelessWidget {
                             context.read<LoginBloc>().add(
                                   RequestOTP(
                                     controller.text.isEmpty ? "" : "+91${controller.text}",
-                                    state.requestOTP.receiveUpdate,
+                                    state.requestOTPModel.receiveUpdate,
                                   ),
                                 );
                           }
@@ -178,7 +178,7 @@ class _LoginScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is LoginInitial) {
             return Checkbox.adaptive(
-              value: state.requestOTP.receiveUpdate,
+              value: state.requestOTPModel.receiveUpdate,
               onChanged: (value) {
                 context.read<LoginBloc>().add(CheckBoxChanged(value ?? false));
               },
@@ -191,7 +191,7 @@ class _LoginScreen extends StatelessWidget {
       onTap: () {
         context.read<LoginBloc>().add(
               CheckBoxChanged(
-                !(context.read<LoginBloc>().state.requestOTP.receiveUpdate),
+                !(context.read<LoginBloc>().state.requestOTPModel.receiveUpdate),
               ),
             );
       },

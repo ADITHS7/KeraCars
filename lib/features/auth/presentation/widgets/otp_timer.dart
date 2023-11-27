@@ -2,7 +2,7 @@ import "dart:async";
 
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
-import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
+import "package:keracars_app/features/auth/blocs/blocs.dart";
 
 class OTPTimer extends StatefulWidget {
   const OTPTimer({super.key});
@@ -80,8 +80,8 @@ class _OTPTimerState extends State<OTPTimer> {
                       final loginState = context.read<LoginBloc>().state;
                       context.read<LoginBloc>().add(
                             RequestOTP(
-                              loginState.requestOTP.credential,
-                              loginState.requestOTP.receiveUpdate,
+                              loginState.requestOTPModel.credential,
+                              loginState.requestOTPModel.receiveUpdate,
                             ),
                           );
                       startTimer();

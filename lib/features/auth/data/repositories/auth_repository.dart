@@ -2,52 +2,41 @@ import "package:dio/dio.dart";
 import "package:keracars_app/core/network/resources/data_state.dart";
 import "package:keracars_app/features/auth/data/datasources/datasources.dart";
 import "package:keracars_app/features/auth/data/models/models.dart";
-import "package:keracars_app/features/auth/domain/entities/entities.dart";
-import "package:keracars_app/features/auth/domain/repositories/auth_repository.dart";
 
-class AuthRepositoryImpl implements AuthRepository {
+class AuthRepository {
   final AuthService _authService;
 
-  const AuthRepositoryImpl({
+  const AuthRepository({
     required AuthService authService,
   }) : _authService = authService;
 
-  @override
-  Future<DataState<String>> requestOTP(RequestOTPEntity requestOTP) async {
+  Future<DataState<String>> requestOTP(RequestOTPModel requestOTP) async {
     try {
-      final httpResponse = await _authService.getOTP(RequestOTPModel(
-        credential: requestOTP.credential,
-        receiveUpdate: requestOTP.receiveUpdate,
-      ));
+      final httpResponse = await _authService.getOTP(requestOTP);
       return DataSuccess(httpResponse.data["otpId"]!);
     } on DioException catch (e) {
       return DataFailed(e);
     }
   }
 
-  @override
-  Future<DataState<NewAuthModel>> loginOTP(OTPLoginEntity otpLogin) async {
+  Future<DataState<NewAuthModel>> loginOTP(OTPLoginModel otpLogin) async {
     try {
-      final httpResponse = await _authService.postOTP(otpLogin as OTPLoginModel);
+      final httpResponse = await _authService.postOTP(otpLogin);
       return DataSuccess(httpResponse.data);
     } on DioException catch (e) {
       return DataFailed(e);
     }
   }
 
-  @override
-  Future<DataState<bool>> registerUser(RegisterUserEntity registerUserEntity) async {
+  Future<DataState<bool>> registerUser(RegisterUserModel registerUser) async {
     try {
-      final httpResponse = await _authService.registerUser(RegisterUserModel(
-        phone: registerUserEntity.phone,
-      ));
+      final httpResponse = await _authService.registerUser(registerUser);
       return DataSuccess(httpResponse.data["addedUser"] != null);
     } on DioException catch (e) {
       return DataFailed(e);
     }
   }
 
-  @override
   Future<DataState<String>> refreshAccessToken(String refreshToken) async {
     try {
       final httpResponse = await _authService.refreshAccessToken({"refreshToken": refreshToken});
@@ -57,7 +46,6 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  @override
   Future<DataState<bool>> logoutUser(String refreshToken) async {
     try {
       final httpResponse = await _authService.logoutUser({"refreshToken": refreshToken});

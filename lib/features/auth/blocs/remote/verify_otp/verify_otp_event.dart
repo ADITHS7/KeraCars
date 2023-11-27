@@ -17,7 +17,7 @@ class VerifyOtpInit extends VerifyOtpEvent {
 }
 
 class RequestSignIn extends VerifyOtpEvent {
-  final OTPLoginEntity otpLogin;
+  final OTPLoginModel otpLogin;
 
   const RequestSignIn(this.otpLogin);
 

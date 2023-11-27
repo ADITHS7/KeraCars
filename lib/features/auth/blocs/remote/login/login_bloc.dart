@@ -3,45 +3,45 @@ import "dart:async";
 import "package:bloc/bloc.dart";
 import "package:equatable/equatable.dart";
 import "package:keracars_app/core/network/resources/data_state.dart";
-import "package:keracars_app/features/auth/domain/entities/entities.dart";
-import "package:keracars_app/features/auth/domain/usecases/usecases.dart";
+import "package:keracars_app/features/auth/data/models/models.dart";
+import "package:keracars_app/features/auth/data/repositories/repositories.dart";
 
 part "login_event.dart";
 part "login_state.dart";
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc(this._getOTPUseCase) : super(const LoginInitial()) {
+  LoginBloc(this._authRepository) : super(const LoginInitial()) {
     on<CheckBoxChanged>(_onCheckBoxChanged);
     on<RequestOTP>(_onRequestOTP);
   }
 
-  final GetOTPUseCase _getOTPUseCase;
+  final AuthRepository _authRepository;
 
   void _onCheckBoxChanged(CheckBoxChanged event, Emitter<LoginState> emit) {
-    final requestOtp = RequestOTPEntity(
+    final requestOtp = RequestOTPModel(
       receiveUpdate: event.receiveInstantUpdate,
-      credential: state.requestOTP.credential,
+      credential: state.requestOTPModel.credential,
     );
 
-    return emit(LoginInitial(requestOTPEntity: requestOtp));
+    return emit(LoginInitial(requestOTPModel: requestOtp));
   }
 
   Future<void> _onRequestOTP(RequestOTP event, Emitter<LoginState> emit) async {
-    emit(OTPRequestLoading(requestOTPEntity: state.requestOTP));
+    emit(OTPRequestLoading(requestOTPModel: state.requestOTPModel));
 
-    final RequestOTPEntity requestOTP = RequestOTPEntity(
+    final RequestOTPModel requestOTP = RequestOTPModel(
       credential: event.credential,
       receiveUpdate: event.receiveInstantUpdate,
     );
 
-    final dataState = await _getOTPUseCase.execute(params: requestOTP);
+    final dataState = await _authRepository.requestOTP(requestOTP);
 
     if (dataState is DataFailed) {
-      return emit(OTPRequestError(requestOTPEntity: requestOTP, exception: dataState.error));
+      return emit(OTPRequestError(requestOTPModel: requestOTP, exception: dataState.error));
     }
     return emit(OTPRequestSuccess(
       otpId: dataState.data!,
-      requestOTPEntity: requestOTP,
+      requestOTPModel: requestOTP,
       resending: event.resending ?? false,
     ));
   }

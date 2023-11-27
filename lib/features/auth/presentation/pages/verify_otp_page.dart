@@ -4,8 +4,8 @@ import "package:get_it/get_it.dart";
 import "package:go_router/go_router.dart";
 import "package:keracars_app/config/routes/route_name.dart";
 import "package:keracars_app/core/error/network_exception.dart";
+import "package:keracars_app/features/auth/blocs/blocs.dart";
 import "package:keracars_app/features/auth/data/models/otp_login_model.dart";
-import "package:keracars_app/features/auth/presentation/blocs/blocs.dart";
 import "package:keracars_app/features/auth/presentation/widgets/widgets.dart";
 
 class VerifyOTPPage extends StatelessWidget {
@@ -132,7 +132,7 @@ class _VerifyOTPPage extends StatelessWidget {
   Widget _subheader(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
-    final phone = (context.read<LoginBloc>().state as OTPRequestSuccess).requestOTP.credential;
+    final phone = (context.read<LoginBloc>().state as OTPRequestSuccess).requestOTPModel.credential;
 
     return Text.rich(
       TextSpan(

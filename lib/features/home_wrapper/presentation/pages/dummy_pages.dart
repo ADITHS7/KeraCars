@@ -2,8 +2,8 @@ import "package:coolicons/coolicons.dart";
 import "package:flutter/material.dart";
 import "package:get_it/get_it.dart";
 import "package:go_router/go_router.dart";
-import "package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart";
-import "package:keracars_app/features/auth/presentation/blocs/remote/auth/auth_bloc.dart";
+import "package:keracars_app/features/app_start/cubit/app_start_cubit.dart";
+import "package:keracars_app/features/auth/blocs/remote/auth/auth_bloc.dart";
 
 class PageA extends StatelessWidget {
   const PageA({super.key});

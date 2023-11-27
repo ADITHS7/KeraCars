@@ -2,12 +2,11 @@ import "dart:async";
 
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
-import "package:flutter_svg/svg.dart";
 import "package:get_it/get_it.dart";
 import "package:go_router/go_router.dart";
 import "package:keracars_app/config/routes/route_name.dart";
 import "package:keracars_app/core/widgets/widgets.dart";
-import "package:keracars_app/features/app_start/presentation/cubit/app_start_cubit.dart";
+import "package:keracars_app/features/app_start/cubit/app_start_cubit.dart";
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -58,9 +57,8 @@ class _SplashScreen extends StatelessWidget {
               const Expanded(flex: 1, child: SizedBox()),
               Expanded(
                 flex: 2,
-                child: SvgPicture.asset(
-                  "assets/svg/splash_image.svg",
-                  semanticsLabel: "KeraCars Logo",
+                child: Image.asset(
+                  "assets/images/splash_logo.png",
                   width: MediaQuery.of(context).size.width * .35,
                 ),
               ),

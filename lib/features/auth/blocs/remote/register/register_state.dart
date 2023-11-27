@@ -21,7 +21,7 @@ final class RegisterError extends RegisterState {
 }
 
 final class RegisterSuccess extends RegisterState {
-  final RegisterUserEntity registerUser;
+  final RegisterUserModel registerUser;
 
   const RegisterSuccess(this.registerUser);
 
