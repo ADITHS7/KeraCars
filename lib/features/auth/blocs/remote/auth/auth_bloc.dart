@@ -22,7 +22,8 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
   final TokenService _tokenService;
   final AuthRepository _authRepository;
 
-  Future<void> _checkAuthentication(CheckAuthentication event, Emitter<AuthState> emit) async {
+  Future<void> _checkAuthentication(
+      CheckAuthentication event, Emitter<AuthState> emit) async {
     try {
       await _tokenService.getNewAccessToken();
       return emit(AuthAuthenticated());
@@ -40,13 +41,15 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _addAuthentication(AddAuthentication event, Emitter<AuthState> emit) async {
+  Future<void> _addAuthentication(
+      AddAuthentication event, Emitter<AuthState> emit) async {
     await _tokenService.setAccessToken(event.newAuth.accessToken);
     await _tokenService.setRefreshToken(event.newAuth.refreshToken);
     return emit(AuthAuthenticated());
   }
 
-  Future<void> _removeAuthentication(RemoveAuthentication event, Emitter<AuthState> emit) async {
+  Future<void> _removeAuthentication(
+      RemoveAuthentication event, Emitter<AuthState> emit) async {
     final refreshToken = await _tokenService.getRefreshToken();
     if (refreshToken != null) await _authRepository.logoutUser(refreshToken);
 

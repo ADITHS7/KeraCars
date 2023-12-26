@@ -7,5 +7,8 @@ part "register_user_model.g.dart";
 class RegisterUserModel with _$RegisterUserModel {
   const factory RegisterUserModel({required String phone}) = _RegisterUserModel;
 
-  factory RegisterUserModel.fromJson(Map<String, dynamic> json) => _$RegisterUserModelFromJson(json);
+  factory RegisterUserModel.fromJson(Map<String, dynamic> json) =>
+      _$RegisterUserModelFromJson(json);
+
+  String get phone => phone;
 }

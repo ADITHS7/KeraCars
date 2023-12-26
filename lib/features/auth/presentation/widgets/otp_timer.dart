@@ -33,7 +33,8 @@ class _OTPTimerState extends State<OTPTimer> {
             if (_countdown < 10) {
               _time = "00:0$_countdown";
             } else if (_countdown > 59) {
-              _time = '0${(_countdown / 60).floor()}:${_countdown % 60 == 0 ? "00" : _countdown}';
+              _time =
+                  '0${(_countdown / 60).floor()}:${_countdown % 60 == 0 ? "00" : _countdown}';
             } else {
               _time = "00:$_countdown";
             }
@@ -90,7 +91,9 @@ class _OTPTimerState extends State<OTPTimer> {
               child: Text(
                 "Resend OTP",
                 style: TextStyle(
-                  color: _countdown == 0 ? theme.colorScheme.primary : theme.disabledColor,
+                  color: _countdown == 0
+                      ? theme.colorScheme.primary
+                      : theme.disabledColor,
                   fontWeight: FontWeight.w600,
                 ),
               ),

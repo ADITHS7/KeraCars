@@ -10,5 +10,10 @@ class RequestOTPModel with _$RequestOTPModel {
     required bool receiveUpdate,
   }) = _RequestOTPModel;
 
-  factory RequestOTPModel.fromJson(Map<String, dynamic> json) => _$RequestOTPModelFromJson(json);
+  factory RequestOTPModel.fromJson(Map<String, dynamic> json) =>
+      _$RequestOTPModelFromJson(json);
+
+  bool get receiveUpdate; // Corrected getter
+
+  String get credential; // Corrected getter
 }

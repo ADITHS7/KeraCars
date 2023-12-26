@@ -44,7 +44,9 @@ class _RegisterScreen extends StatelessWidget {
         if (state is RegisterSuccess) {
           Fluttertoast.showToast(msg: "Register successful");
           context.goNamed(RouteName.login);
-          context.read<LoginBloc>().add(RequestOTP(state.registerUser.phone, false));
+          context
+              .read<LoginBloc>()
+              .add(RequestOTP(state.registerUser.phone, false));
         } else if (state is RegisterError) {
           ErrorAlertDialog.show<String>(
             context,
@@ -81,11 +83,13 @@ class _RegisterScreen extends StatelessWidget {
             children: [
               Text(
                 "Create New Account",
-                style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+                style: theme.textTheme.headlineMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
                 "Enter details to continue",
-                style: theme.textTheme.titleMedium?.copyWith(color: theme.disabledColor),
+                style: theme.textTheme.titleMedium
+                    ?.copyWith(color: theme.disabledColor),
               ),
               const SizedBox(height: 36),
               CustomTextFormField(
@@ -106,14 +110,18 @@ class _RegisterScreen extends StatelessWidget {
                 child: BlocBuilder<RegisterBloc, RegisterState>(
                   builder: (context, state) {
                     return CTAButton(
-                      text: state is RegisterLoading ? "Processing..." : "Get OTP",
+                      text: state is RegisterLoading
+                          ? "Processing..."
+                          : "Get OTP",
                       onPressed: state is RegisterLoading
                           ? null
                           : () {
                               if (formKey.currentState?.validate() ?? false) {
                                 context.read<RegisterBloc>().add(
                                       RegisteringUser(
-                                        RegisterUserModel(phone: "+91${phoneController.text}"),
+                                        RegisterUserModel(
+                                            phone:
+                                                "+91${phoneController.text}"),
                                       ),
                                     );
                               }

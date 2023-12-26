@@ -32,11 +32,18 @@ class _RootPage extends StatelessWidget {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              state is AuthInitial ? const CircularProgressIndicator.adaptive() : const SizedBox(),
-              state is AuthInitial ? const SizedBox(height: 20) : const SizedBox(),
+              state is AuthInitial
+                  ? const CircularProgressIndicator.adaptive()
+                  : const SizedBox(),
+              state is AuthInitial
+                  ? const SizedBox(height: 20)
+                  : const SizedBox(),
               Text(
                 "Loading...",
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(fontWeight: FontWeight.w600),
               ),
             ],
           );
